@@ -12,7 +12,10 @@ class ReadDisplay extends StatelessWidget {
 
   // get docIDs
   Future getDocId() async {
-    FirebaseFirestore.instance.collection('users');
+    FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs);
   }
 
   @override

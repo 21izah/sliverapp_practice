@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sliverapp_practice/backend_page_operations/user_id.dart';
 import 'package:sliverapp_practice/pages/welcomesixth_page.dart';
 
 class SignUPpage extends StatefulWidget {
@@ -16,72 +17,8 @@ class _SignUPpageState extends State<SignUPpage> {
   final docUsers = FirebaseFirestore.instance.collection('users');
 
   bool passwordObscured = true;
-  Future signUp() async {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-              child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-            backgroundColor: Colors.black,
-            strokeWidth: 5,
-            color: Colors.black,
-          ));
-        });
 
-
-      addUserDetails(
-        _firstnameController.text.trim(),
-        _othernameController.text.trim(),
-        _surnameController.text.trim(),
-        _emailController.text.trim(),
-        _phoneNumberController.text.trim(),
-        _btcWalletController.text.trim(),
-        _ethereumWalletController.text.trim(),
-        _usdtTrc20WalletController.text.trim(),
-        _usdtBep20Controller.text.trim(),
-        _usdtPolygonController.text.trim(),
-        _usdtSolanaController.text.trim(),
-        _busdBep20Controller.text.trim(),
-        _busdPolygonController.text.trim(),
-      ).then((value) => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SixthPage(),
-          )));
-    }
-  }
-
-  Future addUserDetails(
-    String firstName,
-    String otherName,
-    String surName,
-    String email,
-    String phoneNumber,
-    String btcWalletAddress,
-    String ethWalletAddress,
-    String usdtTrc20WalletAddress,
-    String usdtBep20WalletAddress,
-    String usdtPolygonWalletAddress,
-    String usdtSolanaWalletAddress,
-    String busdBep20walletAddress,
-    String busdPolygonWalletAddress,
-  ) async {
-    FirebaseFirestore.instance.collection('users').add({
-      'First Name': firstName,
-      'Other Name': otherName,
-      'Surname': surName,
-      'Email': email,
-      'Phone Number': phoneNumber,
-      'BTC Wallet Address': btcWalletAddress,
-      'Ethereum Wallet Address': ethWalletAddress,
-      'USDT TRC-20 Wallet Address': usdtTrc20WalletAddress,
-      'USDT BEP-20 Wallet Address': usdtBep20WalletAddress,
-      'USDT Polygon Wallet Address': usdtPolygonWalletAddress,
-      'USDT Solana Wallet Address': usdtSolanaWalletAddress,
-      'BUSD BEP-20 WAllet Address': busdBep20walletAddress,
-      'BUSD Polygon Wallet Address': busdPolygonWalletAddress,
-    });
-  }
-
+// check for password and confirmed password
   bool passwordConfirmed() {
     if (_passwordController.text.trim() ==
         _comfirmpasswordController.text.trim()) {
@@ -140,6 +77,88 @@ class _SignUPpageState extends State<SignUPpage> {
     _busdBep20Controller.dispose();
     _busdPolygonController.dispose();
     super.dispose();
+  }
+
+// sign up function
+  Future signUp() async {
+    // circular dialog
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+              child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
+            backgroundColor: Colors.black,
+            strokeWidth: 5,
+            color: Colors.black,
+          ));
+        });
+
+    if (passwordConfirmed()) {
+      //create user with email and password
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+
+      Future addUserDetails(
+        String firstName,
+        String otherName,
+        String surName,
+        String email,
+        int phoneNumber,
+        String btcWalletAddress,
+        String ethWalletAddress,
+        String usdtTrc20WalletAddress,
+        String usdtBep20WalletAddress,
+        String usdtPolygonWalletAddress,
+        String usdtSolanaWalletAddress,
+        String busdBep20walletAddress,
+        String busdPolygonWalletAddress,
+      ) async {
+        // create data to firebase firestore
+        // var firebaseUser = await FirebaseAuth.instance.currentUser;
+
+        FirebaseFirestore.instance.collection('users').add({
+          'First Name': firstName,
+          'Other Name': otherName,
+          'Surname': surName,
+          'Email': email,
+          'Phone Number': phoneNumber,
+          'BTC Wallet Address': btcWalletAddress,
+          'Ethereum Wallet Address': ethWalletAddress,
+          'USDT TRC-20 Wallet Address': usdtTrc20WalletAddress,
+          'USDT BEP-20 Wallet Address': usdtBep20WalletAddress,
+          'USDT Polygon Wallet Address': usdtPolygonWalletAddress,
+          'USDT Solana Wallet Address': usdtSolanaWalletAddress,
+          'BUSD BEP-20 WAllet Address': busdBep20walletAddress,
+          'BUSD Polygon Wallet Address': busdPolygonWalletAddress,
+        });
+      }
+
+      // textfield controllers to get input from textfield
+
+      addUserDetails(
+        _firstnameController.text.trim(),
+        _othernameController.text.trim(),
+        _surnameController.text.trim(),
+        _emailController.text.trim(),
+        int.parse(_phoneNumberController.text.trim()),
+        _btcWalletController.text.trim(),
+        _ethereumWalletController.text.trim(),
+        _usdtTrc20WalletController.text.trim(),
+        _usdtBep20Controller.text.trim(),
+        _usdtPolygonController.text.trim(),
+        _usdtSolanaController.text.trim(),
+        _busdBep20Controller.text.trim(),
+        _busdPolygonController.text.trim(),
+      );
+
+      UserManagement();
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const SixthPage(),
+      ));
+    }
   }
 
   @override
@@ -433,8 +452,8 @@ class _SignUPpageState extends State<SignUPpage> {
                   onPressed: (() => setState(() {
                         passwordObscured = !passwordObscured;
                       })),
-                  icon: const Icon(
-                    Icons.visibility_off,
+                  icon: Icon(
+                    passwordObscured ? Icons.visibility_off : Icons.visibility,
                     color: Colors.deepOrange,
                   ),
                 ),
@@ -460,8 +479,8 @@ class _SignUPpageState extends State<SignUPpage> {
                   onPressed: (() => setState(() {
                         passwordObscured = !passwordObscured;
                       })),
-                  icon: const Icon(
-                    Icons.visibility_off,
+                  icon: Icon(
+                    passwordObscured ? Icons.visibility_off : Icons.visibility,
                     color: Colors.deepOrange,
                   ),
                 ),

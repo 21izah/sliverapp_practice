@@ -114,8 +114,10 @@ class _LogInPageState extends State<LogInPage> {
                         onPressed: (() => setState(() {
                               passwordObscured = !passwordObscured;
                             })),
-                        icon: const Icon(
-                          Icons.visibility_off,
+                        icon: Icon(
+                          passwordObscured
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: Colors.deepOrange,
                         ),
                       ),
