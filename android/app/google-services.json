@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "315602189139",
+    "project_id": "firstappfirebase-54457",
+    "storage_bucket": "firstappfirebase-54457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315602189139:android:dac9f791c327533bc9bfa6",
+        "android_client_info": {
+          "package_name": "com.example.sliverapp_practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315602189139-hat9u5lnd0hj4ki208biv1cjh5ll5rv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_KuAv1Pp7VptGXxbeMACB6S7_11Rf1PA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315602189139-hat9u5lnd0hj4ki208biv1cjh5ll5rv2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "315602189139-7b347ggmpokcmsge2coieco93qmu0ipk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sliverappPractice"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
