@@ -14,8 +14,6 @@ class SignUPpage extends StatefulWidget {
 }
 
 class _SignUPpageState extends State<SignUPpage> {
-  final docUsers = FirebaseFirestore.instance.collection('users');
-
   bool passwordObscured = true;
 
 // check for password and confirmed password
@@ -29,7 +27,9 @@ class _SignUPpageState extends State<SignUPpage> {
   }
 
   final _firstnameController = TextEditingController();
+
   final _othernameController = TextEditingController();
+
   final _surnameController = TextEditingController();
 
   final _usernameController = TextEditingController();
@@ -57,6 +57,10 @@ class _SignUPpageState extends State<SignUPpage> {
   final _busdBep20Controller = TextEditingController();
 
   final _busdPolygonController = TextEditingController();
+
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+
+  final docUsers = FirebaseFirestore.instance.collection('users');
 
   @override
   void dispose() {
@@ -114,6 +118,7 @@ class _SignUPpageState extends State<SignUPpage> {
         String usdtSolanaWalletAddress,
         String busdBep20walletAddress,
         String busdPolygonWalletAddress,
+        String id,
       ) async {
         // create data to firebase firestore
         // var firebaseUser = await FirebaseAuth.instance.currentUser;
@@ -132,6 +137,7 @@ class _SignUPpageState extends State<SignUPpage> {
           'USDT Solana Wallet Address': usdtSolanaWalletAddress,
           'BUSD BEP-20 WAllet Address': busdBep20walletAddress,
           'BUSD Polygon Wallet Address': busdPolygonWalletAddress,
+          id: docUsers.id,
         });
       }
 
@@ -151,6 +157,7 @@ class _SignUPpageState extends State<SignUPpage> {
         _usdtSolanaController.text.trim(),
         _busdBep20Controller.text.trim(),
         _busdPolygonController.text.trim(),
+        docUsers.id,
       );
 
       UserManagement();

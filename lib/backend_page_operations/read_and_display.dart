@@ -12,14 +12,21 @@ class ReadDisplay extends StatelessWidget {
 
   // get docIDs
   Future getDocId() async {
-    FirebaseFirestore.instance
-        .collection('users')
-        .get()
-        .then((snapshot) => snapshot.docs);
+    FirebaseFirestore.instance.collection('users').get().then(
+          (snapshot) => snapshot.docs.forEach(
+            (document) {
+              docIds.add(document.reference.id);
+            },
+          ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [Text('helo')],
+      ),
+    );
   }
 }
