@@ -124,6 +124,7 @@ class _SignUPpageState extends State<SignUPpage> {
         // var firebaseUser = await FirebaseAuth.instance.currentUser;
 
         FirebaseFirestore.instance.collection('users').add({
+          // document "field" : "value"
           'First Name': firstName,
           'Other Name': otherName,
           'Surname': surName,

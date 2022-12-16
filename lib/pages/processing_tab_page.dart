@@ -20,10 +20,6 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
       body: ListView(
         children: [
           TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
         ],
       ),
     );

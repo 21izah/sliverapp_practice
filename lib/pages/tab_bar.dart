@@ -25,24 +25,40 @@ class _TabBarWidgetState extends State<TabBarWidget> {
           children: const [
             TabBar(indicatorColor: Colors.deepOrange, tabs: [
               Tab(
-                text: 'Successful',
+                ///  text: 'Successful',
                 icon: Icon(
                   Icons.handshake,
-                  color: Colors.deepOrange,
+                  color: Colors.green,
+                ),
+                child: Text(
+                  'Successful',
+                  style: TextStyle(color: Colors.green),
                 ),
               ),
               Tab(
-                  text: 'Processing',
-                  icon: Icon(
-                    Icons.outgoing_mail,
-                    color: Colors.deepOrange,
-                  )),
+                //  text: 'Processing',
+                icon: Icon(
+                  Icons.outgoing_mail,
+                  color: Colors.blue,
+                ),
+
+                child: Text(
+                  'Processing',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
               Tab(
-                  text: 'Declined',
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.deepOrange,
-                  ))
+                //  text: 'Declined',
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                ),
+
+                child: Text(
+                  'Declined',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
             ]),
             Expanded(
               child: TabBarView(children: [

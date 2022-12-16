@@ -20,10 +20,6 @@ class _DeclinedTabPageState extends State<DeclinedTabPage> {
       body: ListView(
         children: [
           TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
         ],
       ),
     );

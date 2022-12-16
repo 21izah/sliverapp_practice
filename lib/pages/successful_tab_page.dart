@@ -20,10 +20,6 @@ class _SuccesfulTabPageState extends State<SuccesfulTabPage> {
       body: ListView(
         children: [
           TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
-          TransactionContainer(),
         ],
       ),
     );
