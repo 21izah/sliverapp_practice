@@ -1,17 +1,12 @@
-// ignore_for_file: unused_import
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sliverapp_practice/backend_page_operations/login_page_backend_operation.dart';
-import 'package:sliverapp_practice/pages/eigth_page.dart';
 import 'package:sliverapp_practice/pages/help_page.dart';
+import 'package:sliverapp_practice/pages/loginpage.dart';
 import 'package:sliverapp_practice/pages/profile_page.dart';
 
-import 'package:sliverapp_practice/pages/sign_in_homepage.dart';
-import 'package:sliverapp_practice/pages/buy_page.dart';
+// import 'package:sliverapp_practice/pages/sign_in_homepage.dart';
 import 'package:sliverapp_practice/pages/tab_bar.dart';
 import 'package:sliverapp_practice/pages/welcomesixth_page.dart';
-import 'package:sliverapp_practice/pages/welcome_page.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);
@@ -19,19 +14,22 @@ class NavigationDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.grey[900],
+      width: 300,
       child: Container(
-        color: Colors.grey[900],
-        //Color.fromARGB(255, 139, 63, 5),
-        //
-        // const Color(0xFF211E27)
-
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.grey[900],
+        ),
+        // color: Colors.grey[900],
         child: ListView(
           children: [
             DrawerHeader(
                 curve: Curves.bounceIn,
-                margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 duration: const Duration(milliseconds: 5),
-                decoration: const BoxDecoration(color: Colors.deepOrange),
+                decoration: BoxDecoration(color: Colors.grey[900]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -40,7 +38,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                         backgroundColor: Colors.grey[900],
                         child: const Icon(
                           Icons.person,
-                          size: 40,
+                          size: 80,
                           color: Colors.deepOrange,
                         )),
                     const SizedBox(
@@ -51,7 +49,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: Colors.deepOrange),
                     ),
                   ],
                 )),
@@ -151,18 +149,19 @@ class NavigationDrawerWidget extends StatelessWidget {
               thickness: 2,
             ),
             ListTile(
-                leading: const Icon(Icons.logout, color: Colors.deepOrange),
-                title: const Text(
-                  'Log out',
-                  style: TextStyle(color: Colors.deepOrange),
-                ),
-                onTap: () => FirebaseAuth.instance.signOut().then(
-                      (value) => Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const SignInHomePage(),
-                          ),
-                          (route) => false),
-                    )),
+              leading: const Icon(Icons.logout, color: Colors.deepOrange),
+              title: const Text(
+                'Log out',
+                style: TextStyle(color: Colors.deepOrange),
+              ),
+              onTap: () => FirebaseAuth.instance.signOut().then(
+                    (value) => Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const LogInPage(),
+                        ),
+                        (route) => false),
+                  ),
+            ),
             const Divider(
               indent: 20,
               color: Colors.black,

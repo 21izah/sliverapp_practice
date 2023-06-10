@@ -13,15 +13,17 @@ class CustomerCarePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Cza Support'),
           centerTitle: true,
-          backgroundColor: const Color(0XFFF7931E),
+          backgroundColor: Colors.deepOrange,
+
+          //  const Color(0XFFF7931E),
           elevation: 0,
         ),
         body: Tawk(
           directChatLink:
               'https://tawk.to/chat/637dad71daff0e1306d8f024/1giher1h4',
           visitor: TawkVisitor(
-            name: 'Ayoub AMINE',
-            email: 'ayoubamine2a@gmail.com',
+            name: 'Cza...',
+            email: 'czaexchange@gmail.com',
           ),
           onLoad: () {
             print('Hello Tawk!');

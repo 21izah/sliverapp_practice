@@ -8,12 +8,12 @@ class CoinBuySell extends StatelessWidget {
   final String coinName;
   final coinImage;
   final gradientColor;
-  const CoinBuySell(
-      {Key? key,
-      required this.coinName,
-      required this.coinImage,
-      required this.gradientColor})
-      : super(key: key);
+  const CoinBuySell({
+    Key? key,
+    required this.coinName,
+    required this.coinImage,
+    required this.gradientColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,6 @@ class CoinBuySell extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          // decoration: BoxDecoration(
-          //     color: Colors.white, borerRadius: BorderRadius.circular(20)),
           height: 150,
           width: 400,
           child: Stack(children: [
@@ -83,7 +81,7 @@ class CoinBuySell extends StatelessWidget {
                         radius: 50,
                         backgroundColor: Colors.white,
                         child: coinImage,
-                      )
+                      ),
                     ],
                   ),
                 )

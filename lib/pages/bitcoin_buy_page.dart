@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:sliverapp_practice/containers/card_details.dart';
 import 'package:sliverapp_practice/containers/coinBuySell.dart';

@@ -1,33 +1,19 @@
-// ignore_for_file: unused_import, unused_field
-
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sliverapp_practice/backend_page_operations/crud_testing.dart';
-import 'package:sliverapp_practice/containers/bitcoin_buy_sell_container.dart';
-import 'package:sliverapp_practice/containers/busd_bep20_buy_sell_conatainer.dart';
+
 import 'package:sliverapp_practice/containers/card_details.dart';
-import 'package:sliverapp_practice/containers/coinBuySell.dart';
-import 'package:sliverapp_practice/containers/coinContainer.dart';
-import 'package:sliverapp_practice/containers/ethereum_buy_sell_container.dart';
 import 'package:sliverapp_practice/containers/neuCoinContainer.dart';
-import 'package:sliverapp_practice/containers/usdt_bep20_buy_sell_container.dart';
-import 'package:sliverapp_practice/containers/usdt_trc20_buy_sell_container.dart';
-import 'package:sliverapp_practice/containers/vertial%20containers/ver_bitcoin.dart';
-import 'package:sliverapp_practice/containers/vertial%20containers/ver_busd_bep20.dart';
-import 'package:sliverapp_practice/containers/vertial%20containers/ver_ethereum.dart';
-import 'package:sliverapp_practice/containers/vertial%20containers/ver_usdt_bep20.dart';
-import 'package:sliverapp_practice/containers/vertial%20containers/ver_usdt_trc20.dart';
-import 'package:sliverapp_practice/pages/bitcoin_buy_page.dart';
-import 'package:sliverapp_practice/pages/buy_page.dart';
-import 'package:sliverapp_practice/pages/curved_navigation_bar_widget.dart';
-import 'package:sliverapp_practice/pages/customer_care_page.dart';
-import 'package:sliverapp_practice/pages/eigth_page.dart';
-import 'package:sliverapp_practice/pages/liquid_swipe.dart';
-import 'package:sliverapp_practice/pages/sell_page.dart';
-import 'package:sliverapp_practice/widgets/bottom_navigation_bar.dart';
-import 'package:sliverapp_practice/widgets/navigation_drawer_widget.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import 'package:lottie/lottie.dart';
+
+import '../containers/ethNeuContainer.dart';
+
+import 'buy_page2.dart';
+
+import 'package:flutter_animate/flutter_animate.dart';
+import '../constants/data_constant.dart';
+import 'package:page_transition/page_transition.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -37,171 +23,329 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  final _cardController = PageController();
+  // final _cardController = PageController();
+
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
-        splashColor: Colors.amber,
-        elevation: 50,
-        child: const Icon(Icons.message),
-        onPressed: () {},
-      ),
-      drawer: const NavigationDrawerWidget(),
-      backgroundColor: Colors.deepOrange.shade900,
-      appBar: AppBar(backgroundColor: Colors.black),
-      body: ListView(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Stack(
         children: [
           Column(
             children: [
               const SizedBox(
-                height: 40,
+                height: 10,
               ),
               Container(
-                decoration: const BoxDecoration(
-                    //  color: Colors.grey[900],
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20))),
-                height: 300,
-                child: CardDetails(
-                  cardColor: Colors.deepOrange,
-                  cardBalance: 455656.00,
-                  cardNumber: 2355,
-                  cardExpiryMonth: 23,
-                  cardExpiryYear: 20,
-                  cardImage:
-                      Lottie.asset('lib/assets/bitcoin.json', fit: BoxFit.fill),
+                height: screenSize.height * 0.40,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  // borderRadius: BorderRadius.only(
+                  //   bottomRight: Radius.circular(20),
+                  //   bottomLeft: Radius.circular(20),
+                  // ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 150,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    CoinContainer(
-                        coinImage: Lottie.asset('lib/assets/bitcoin.json'),
-                        coinName: 'Bitcoin Cash'),
-                    CoinContainer(
-                        coinImage: Lottie.asset('lib/assets/litecoin.json'),
-                        coinName: 'Litcoin'),
-                    CoinContainer(
-                        coinImage: Lottie.asset(
-                            'lib/assets/cardano-ada-animation.json'),
-                        coinName: 'Cardano'),
-                    CoinContainer(
-                        coinImage: Lottie.asset('lib/assets/dash.json'),
-                        coinName: 'Dash'),
-                    CoinContainer(
-                        coinImage:
-                            Lottie.asset('lib/assets/100440-monero.json'),
-                        coinName: 'Monero'),
-                    CoinContainer(
-                        coinImage: Lottie.asset('lib/assets/dash.json'),
-                        coinName: 'Digibite'),
-                    CoinContainer(
-                        coinImage: Lottie.asset(
-                            'lib/assets/115452-bitcoin-dollar-exchange.json'),
-                        coinName: 'Nano'),
-                    CoinContainer(
-                        coinImage:
-                            Lottie.asset('lib/assets/100695-dogecoin.json'),
-                        coinName: 'Dogecoin'),
-                    CoinContainer(
-                        coinImage: Lottie.asset(
-                            'lib/assets/tether-usdt-animation.json'),
-                        coinName: 'Tron'),
-                    CoinContainer(
-                        coinImage: Lottie.asset(
-                            'lib/assets/115452-bitcoin-dollar-exchange.json'),
-                        coinName: 'Xrp'),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const EighthPage(),
-                    )),
-                    child: NeuCoinCardContainer(
-                      coinName: 'Bitcoin',
-                      coinImage: Lottie.asset('lib/assets/bitcoin.json'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CrudTesting(),
-                    )),
-                    child: NeuCoinCardContainer(
-                      coinName: 'Ethereum',
-                      coinImage: Lottie.asset(
-                        'lib/assets/ethereum.json',
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20.0,
+                              // bottom: 5,
+                              top: 10,
+                            ),
+                            child: Container(
+                              // color: Colors.amber,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Hello,',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.grey[700]),
+                                  ).animate().slideX(duration: 2000.ms),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: screenSize.width - 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  // color: Colors.amber,
+                                ),
+                                margin: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                                // padding: EdgeInsets.all(20),
+                                child: FutureBuilder<DocumentSnapshot>(
+                                  future: FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(user!.email)
+                                      .get(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+                                      return Text(
+                                        '${data['First Name']} ${data['Surname']}',
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: primaryColor,
+                                        ),
+                                      );
+                                    } else {
+                                      return Text('loading');
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => LiquidSwipeTesting(),
-                    )),
-                    child: NeuCoinCardContainer(
-                      coinName: 'USDT',
-                      coinImage:
-                          Lottie.asset('lib/assets/tether-usdt-animation.json'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => BuyPage(),
-                    )),
-                    child: NeuCoinCardContainer(
-                      coinName: 'BUSD',
-                      coinImage: Image.asset('lib/assets/busd-unscreen.gif'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => SellPage(),
-                    )),
-                    child: NeuCoinCardContainer(
-                      coinName: 'Other Crypto',
-                      coinImage: Lottie.asset(
-                          'lib/assets/115452-bitcoin-dollar-exchange.json',
-                          fit: BoxFit.cover),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FloatingActionButton(
-                          heroTag: 'customer page button',
-                          backgroundColor: Colors.deepOrange,
-                          splashColor: Colors.amber,
-                          child: const Icon(Icons.message),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const CustomerCarePage(),
-                            ));
-                          },
+                      Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20))),
+                        height: 210,
+                        child: CardDetails(
+                          cardColor: primaryColor,
+                          cardBalance: 5000000,
+                          cardNumber: 2355,
+                          cardExpiryMonth: 23,
+                          cardExpiryYear: 20,
+                          cardImage: Lottie.asset('lib/assets/bitcoin.json',
+                              fit: BoxFit.fill),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ).animate().slideX(duration: 500.ms),
+                    ]),
               ),
             ],
           ),
+          Positioned(
+            // left: screenSize.width * 0.0009,
+            top: screenSize.height * 0.37,
+            // right: screenSize.width * 0.0009,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
+                //  borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              height: screenSize.height * 0.8,
+              width: screenSize.width - 10,
+              child: ListView(children: [
+                Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          right: 5,
+                          bottom: 20,
+                        ),
+                        child: Container(
+                          child: Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  radius: 30,
+                                  child: Image.asset('lib/assets/usdt_.png')),
+                            ),
+                            Text(
+                              'USDT',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          height: 105,
+                          width: 105,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0.0,
+                          right: 5,
+                          bottom: 20,
+                        ),
+                        child: Container(
+                          child: Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  radius: 30,
+                                  child: Image.asset('lib/assets/busd1_.png')),
+                            ),
+                            Text(
+                              'BUSD',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ]),
+                          height: 105,
+                          width: 105,
+                          decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0.0,
+                          right: 20,
+                          bottom: 20,
+                        ),
+                        child: Container(
+                          child: Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                  radius: 30,
+                                  child: Image.asset('lib/assets/monero.png')),
+                            ),
+                            Text(
+                              'Others',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
+                          height: 105,
+                          width: 105,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(children: [
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        PageTransition(
+                          child: BuyPage2(),
+                          type: PageTransitionType.rightToLeft,
+                        ),
+                      ),
+                      child: NeuCoinCardContainer(
+                        coinName: 'Bitcoin',
+                        coinImage: Image.asset('lib/assets/bitcoin_cash.png'),
+                      ).animate().slide(duration: 550.ms),
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        PageTransition(
+                          child: BuyPage2(),
+                          type: PageTransitionType.rightToLeft,
+                        ),
+                      ),
+                      child: EthNeuContainer(
+                        coinName: 'Ethereum',
+                        coinImage: Image.asset('lib/assets/Ethereum_.png'),
+                      ).animate().slideX(duration: 600.ms),
+                    ),
+                    // GestureDetector(
+                    //   onTap: () => Navigator.of(context).push(
+                    //     PageTransition(
+                    //       child: BuyPage2(),
+                    //       type: PageTransitionType.rightToLeft,
+                    //     ),
+                    //   ),
+                    //   child: UsdtContainer(
+                    //     coinName: 'USDT',
+                    //     coinImage: Image.asset('lib/assets/usdt_.png'),
+                    //   ).animate().slide(duration: 650.ms),
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () => Navigator.of(context).push(
+                    //     PageTransition(
+                    //       child: BuyPage2(),
+                    //       type: PageTransitionType.rightToLeft,
+                    //     ),
+                    //   ),
+                    //   child: BusdContainer(
+                    //     coinName: 'BUSD',
+                    //     coinImage: Image.asset('lib/assets/busd1_.png'),
+                    //   ).animate().slideX(duration: 700.ms),
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () => Navigator.of(context).push(
+                    //     PageTransition(
+                    //       child: BuyPage2(),
+                    //       type: PageTransitionType.rightToLeft,
+                    //     ),
+                    //   ),
+                    //   child: OtherNeuContainer(
+                    //     coinName: 'Other Crypto',
+                    //     coinImage: Image.asset('lib/assets/monero.png'),
+                    //   ).animate().slide(duration: 750.ms),
+                    // ),
+                    SizedBox(
+                      height: 200,
+                    ),
+                  ]),
+                ]),
+              ]),
+            ),
+          ),
+          // Positioned(
+          //   left: 0.8 * screenSize.width,
+          //   top: 0.85 * screenSize.height,
+          //   // bottom: 0.2 * screenSize.height,
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         FloatingActionButton(
+          //           heroTag: 'customer page button',
+          //           backgroundColor: primaryColor,
+          //           foregroundColor: Colors.black,
+          //           splashColor: Colors.amber,
+          //           child: const Icon(Icons.message),
+          //           onPressed: () {
+          //             Navigator.of(context).push(
+          //               PageTransition(
+          //                 child: CustomerCarePage(),
+          //                 type: PageTransitionType.rightToLeft,
+          //               ),
+          //             );
+          //           },
+          //         ),
+          //       ]
+          //           .animate(interval: NumDurationExtensions(6).seconds)
+          //           .slideX()
+          //           .then()
+          //           .shake(),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
 }
+
+
 // Container(
 //     margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
 //     child: const Vbitcoin()),

@@ -1,11 +1,15 @@
-// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers, use_build_context_synchronously
+// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers, use_build_context_synchronously, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sliverapp_practice/pages/sign_in_homepage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 // ignore: unused_import
 import 'package:lottie/lottie.dart';
+
+import 'login_selection.dart';
+import '../constants/data_constant.dart';
+import 'sign_up_page copy.dart';
+import 'sign_up_page.dart';
 
 class OnboardingPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -39,7 +43,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }),
           children: [
             Container(
-              color: Colors.grey[900],
+              color: whiteColor,
               //  child: AspectRatio(
               //   aspectRatio: 300 / 5,
               child: IntrinsicHeight(
@@ -69,10 +73,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 20),
-                        child: const Text(
+                        child: Text(
                           'WELCOME TO CZA EXCHANGE',
                           style: TextStyle(
-                              color: Colors.deepOrange,
+                              color: primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
@@ -85,24 +89,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Container(
                       child: Center(
                         child: Column(
-                          children: const [
+                          children: [
                             Text(
                               'Hi there! Welcome to the Cza Family!',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: blackColor),
                             ),
                             Text(
                               'We are glad  to help you earn and grow your business.',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: blackColor),
                             ),
                           ],
                         ),
-
-                        // Text(
-                        //   'Hi there! Welcome to the Cza Family! \nWe are glad  to help you earn and grow your business.',
-                        //   style: TextStyle(
-                        //     color: Colors.white,
-                        //   ),
-                        // ),
                       ),
                     ),
                     const SizedBox(
@@ -112,14 +109,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
             ),
-            // child: Image.asset('lib/assets/fast_payment.png'),
-            //  ),
-            // Container(
-            //   color: Colors.grey[900],
-            //   child: Image.asset('lib/assets/Data_security.png'),
-            // ),
+
             Container(
-              color: Colors.grey[900],
+              color: whiteColor,
               child: IntrinsicHeight(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -144,10 +136,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                     Container(
                       margin: const EdgeInsets.only(top: 20),
-                      child: const Text(
+                      child: Text(
                         'SECURITY',
                         style: TextStyle(
-                            color: Colors.deepOrange,
+                            color: primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
@@ -163,14 +155,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       child: Center(
                         child: Column(
-                          children: const [
+                          children: [
                             Text(
                               'As a reputable company your SECURITY ',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: blackColor),
                             ),
                             Text(
                               'is our ulmost priority',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: blackColor),
                             ),
                           ],
                         ),
@@ -187,7 +179,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               // child: Image.asset('lib/assets/fast_payment.png'),
             ),
             Container(
-              color: Colors.grey[900],
+              color: whiteColor,
               //   child: AspectRatio(
               //    aspectRatio: 1 / 1,
               child: IntrinsicHeight(
@@ -207,19 +199,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 30, bottom: 10),
-                      child: const Text(
+                      child: Text(
                         'TRANSACTION SUCCESSFULL',
                         style: TextStyle(
-                            color: Colors.deepOrange,
+                            color: primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const Center(
+                    Center(
                       child: Text(
                         'Get Paid with easy to no stress',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: blackColor,
                         ),
                       ),
                     ),
@@ -233,7 +225,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             // child: Image.asset('lib/assets/fast_payment.png'),
             //   ),
             Container(
-              color: Colors.grey[900],
+              color: whiteColor,
 
               child: IntrinsicHeight(
                 child: Column(
@@ -248,18 +240,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       height: 400,
                       width: 400,
                       child: Lottie.asset('lib/assets/77096-service.json'),
-
-                      //  Image.asset(
-                      //   'lib/assets/24hrs_customer_care_and_transaction.png',
-                      //   fit: BoxFit.fill,
-                      // ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 30),
-                      child: const Text(
+                      child: Text(
                         '24/7 CUSTOMER CARE SERVICE',
                         style: TextStyle(
-                            color: Colors.deepOrange,
+                            color: primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
@@ -267,14 +254,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Container(
                       margin: const EdgeInsets.only(left: 30, top: 10),
                       child: Column(
-                        children: const [
+                        children: [
                           Text(
                             'With our 24hours, 7days a week service,',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: blackColor),
                           ),
                           Text(
                             ' we are always accessible to meet your needs',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: blackColor),
                           ),
                         ],
                       ),
@@ -296,7 +283,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               // child: Image.asset('lib/assets/fast_payment.png'),
             ),
             Container(
-              color: Colors.grey[900],
+              color: whiteColor,
               child: IntrinsicHeight(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -313,17 +300,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child:
                           Lottie.asset('lib/assets/92445-crypto-bitcoin.json'),
                     ),
-                    const Text(
+                    Text(
                       'FAST PAYMENT',
                       style: TextStyle(
-                          color: Colors.deepOrange,
+                          color: primaryColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                    Text(
                       'Receive Payment in no distant time',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: blackColor,
                       ),
                     ),
                     const SizedBox(
@@ -341,24 +328,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
       bottomSheet: isLastPage
           ? Container(
               padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-              //  margin: const EdgeInsets.fromLTRB(80, 20, 0, 10),
               decoration: BoxDecoration(
-                color: Colors.grey[900],
-                // borderRadius: BorderRadius.circular(20),
-                // boxShadow: const [
-                //   BoxShadow(
-                //     color: Colors.deepOrange,
-                //     blurRadius: 15,
-                //     offset: Offset(5, 5),
-                //     spreadRadius: 2,
-                //   ),
-                //   BoxShadow(
-                //     color: Colors.black,
-                //     blurRadius: 15,
-                //     offset: Offset(-10, -10),
-                //     spreadRadius: 2,
-                //   ),
-                // ],
+                color: whiteColor,
               ),
               child: TextButton(
                 style: TextButton.styleFrom(
@@ -367,18 +338,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   final pref = await SharedPreferences.getInstance();
                   pref.setBool('showHome', true);
 
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SignInHomePage(),
-                  ));
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const SignUPpage2(),
+                    ),
+                  );
                 },
-                child: const Text(
-                  'GET STATTED',
-                  style: TextStyle(color: Colors.deepOrange),
+                child: Text(
+                  'GET STARTED',
+                  style: TextStyle(color: primaryColor),
                 ),
               ),
             )
           : Container(
-              color: Colors.grey[900],
+              color: whiteColor,
               height: 100,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -392,39 +365,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.deepOrange,
-                                  blurRadius: 15,
-                                  offset: Offset(5, 5),
-                                  spreadRadius: 2,
-                                ),
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 15,
-                                  offset: Offset(-10, -10),
-                                  spreadRadius: 2,
-                                ),
-                              ],
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Text(
                               'SKIP',
                               style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ))),
                     Center(
                         child: SmoothPageIndicator(
                       controller: controller,
                       count: 5,
-                      effect: const WormEffect(
+                      effect: WormEffect(
                           dotWidth: 13,
                           dotHeight: 15,
                           spacing: 7,
-                          dotColor: Colors.black,
-                          activeDotColor: Colors.deepOrange),
+                          dotColor: blackColor,
+                          activeDotColor: primaryColor),
                       onDotClicked: (index) {
                         controller.animateToPage(index,
                             duration: const Duration(milliseconds: 500),
@@ -441,27 +400,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.deepOrange,
-                                  blurRadius: 15,
-                                  offset: Offset(5, 5),
-                                  spreadRadius: 2,
-                                ),
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 15,
-                                  offset: Offset(-10, -10),
-                                  spreadRadius: 2,
-                                ),
-                              ],
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Text(
                               'NEXT',
                               style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ))),
                   ]),

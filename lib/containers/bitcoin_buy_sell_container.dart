@@ -1,9 +1,10 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:sliverapp_practice/pages/curved_navigation_bar_widget.dart';
+
 import 'package:sliverapp_practice/pages/sell_page.dart';
 import 'package:sliverapp_practice/pages/buy_page.dart';
+import '../constants/data_constant.dart';
 
 class BitcoinBuySellContainer extends StatelessWidget {
   const BitcoinBuySellContainer({Key? key}) : super(key: key);
@@ -13,9 +14,9 @@ class BitcoinBuySellContainer extends StatelessWidget {
     return Container(
       height: 300,
       width: 300,
-      decoration: BoxDecoration(boxShadow: const [
+      decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-            color: Colors.deepOrange,
+            color: primaryColor,
             offset: Offset(10, 5),
             blurRadius: 15,
             spreadRadius: 1),

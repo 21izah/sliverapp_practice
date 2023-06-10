@@ -1,0 +1,120 @@
+import 'package:http/http.dart' as http;
+
+
+// http put request
+
+final textFieldController = TextEditingController();
+
+Future<void> updateData() async {
+  final url = Uri.parse('https://example.com/api/data');
+  try {
+    final response = await http.put(
+      url,
+      body: {
+        'field': textFieldController.text,
+      },
+    );
+    if (response.statusCode == 200) {
+      // Handle successful update here
+    } else {
+      // Handle non-200 status code here
+      print('Failed to update data. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    // Handle network error here
+
+// login http request
+    import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+final emailController = TextEditingController();
+final passwordController = TextEditingController();
+
+class LoginResponse {
+  final String token;
+  final String message;
+
+  LoginResponse({required this.token, required this.message});
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      token: json['token'],
+      message: json['message'],
+    );
+  }
+}
+
+Future<void> login() async {
+  final url = Uri.parse('https://example.com/api/login');
+  try {
+    final response = await http.post(
+      url,
+      body: {
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final loginResponse = LoginResponse.fromJson(jsonResponse);
+      // Handle successful login here using the loginResponse object
+    } else {
+      // Handle non-200 status code here
+      print('Failed to login. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    // Handle network error here
+    print('Failed to login. Error: $e');
+  }
+}
+
+// login post request with headers 
+
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+Future<void> makeAuthenticatedPostRequest(String token) async {
+  final url = Uri.parse('https://example.com/api/create_post');
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token',
+  };
+  final body = '{"title": "My post", "content": "This is my post content"}';
+
+  final response = await http.post(
+    url,
+    headers: headers,
+    body: body,
+  );
+
+  if (response.statusCode == 200) {
+    print('Post created successfully!');
+  } else {
+    print('Error creating post: ${response.reasonPhrase}');
+  }
+}
+
+// http post reuest 
+import 'package:http/http.dart' as http;
+
+Future<void> postData(String name, String symbol, double price) async {
+  final url = Uri.parse('https://api.coingecko.com/api/v3/some/endpoint');
+  final headers = {'Content-Type': 'application/json'};
+  final body = '{"name": "$name", "symbol": "$symbol", "price": $price}';
+
+  try {
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      // Handle successful response here
+      print('Data posted successfully');
+    } else {
+      // Handle non-200 status code here
+      print('Failed to post data. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    // Handle network error here
+    print('Failed to post data. Error: $e');
+  }
+}

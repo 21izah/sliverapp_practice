@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
@@ -13,7 +15,7 @@ class LiquidSwipeTesting extends StatelessWidget {
       ),
       body: LiquidSwipe(
         enableSideReveal: true,
-        slideIconWidget: Icon(
+        slideIconWidget: const Icon(
           Icons.arrow_back_ios_new,
           color: Colors.white,
         ),

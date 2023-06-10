@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_print
+// ignore_for_file: unused_import, avoid_print, depend_on_referenced_packages
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +51,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.black,
+      // ),
       body: SingleChildScrollView(
         child: Column(
 
@@ -96,8 +96,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   controller: _emailController,
                   decoration: InputDecoration(
                       hintText: 'Email',
+                      hintStyle: TextStyle(
+                        color: Colors.deepOrange,
+                      ),
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.2),
+                      fillColor: Colors.grey[200],
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(10))),
@@ -106,33 +109,33 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.deepOrange,
-                          blurRadius: 15,
-                          offset: Offset(5, 5),
-                          spreadRadius: 1),
-                      BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 15,
-                          offset: Offset(-5, -5),
-                          spreadRadius: 1),
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black),
-                height: 50,
-                margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    passwordRest();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white),
-                  child: const Text("Continue"),
+              GestureDetector(
+                onTap: () {
+                  passwordRest();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.deepOrange),
+                  height: 50,
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Center(
+                      child: const Text(
+                    "Continue",
+                    style: TextStyle(color: Colors.white),
+                  )),
+
+                  //  ElevatedButton(
+                  //   onPressed: () {
+
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+
+                  //       backgroundColor: Colors.deepOrange,
+                  //       foregroundColor: Colors.white),
+
+                  // ),
                 ),
               )
             ]),

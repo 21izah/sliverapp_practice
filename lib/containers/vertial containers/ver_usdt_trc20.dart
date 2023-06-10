@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:sliverapp_practice/pages/buy_page.dart';
 import 'package:sliverapp_practice/pages/sell_page.dart';

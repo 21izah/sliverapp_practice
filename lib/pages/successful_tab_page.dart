@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:sliverapp_practice/constants/data_constant.dart';
 
 class SuccesfulTabPage extends StatefulWidget {
   const SuccesfulTabPage({Key? key}) : super(key: key);
@@ -13,12 +14,14 @@ class _SuccesfulTabPageState extends State<SuccesfulTabPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Theme.of(context).colorScheme.background,
       // appBar: AppBar(
       //   backgroundColor: Colors.pink,
       // ),
       body: ListView(
         children: [
+          TransactionContainer(),
+          TransactionContainer(),
           TransactionContainer(),
         ],
       ),
@@ -27,46 +30,33 @@ class _SuccesfulTabPageState extends State<SuccesfulTabPage> {
 
   Widget TransactionContainer() {
     return Container(
-      decoration: BoxDecoration(boxShadow: const [
-        BoxShadow(
-          color: Colors.deepOrange,
-          blurRadius: 15,
-          offset: Offset(5, 5),
-          spreadRadius: 2,
-        ),
-        BoxShadow(
-          color: Colors.deepOrange,
-          blurRadius: 15,
-          offset: Offset(-10, -10),
-          spreadRadius: 2,
-        ),
-      ], color: Colors.black, borderRadius: BorderRadius.circular(20)),
-      margin: const EdgeInsets.fromLTRB(20, 50, 20, 10),
-      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-      child: IntrinsicWidth(
+      decoration: BoxDecoration(
+          color: Colors.green, borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              child: const CircleAvatar(
-                backgroundColor: Colors.deepOrange,
-                child: Text('\$'),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(2, 10, 70, 10),
+              margin: const EdgeInsets.fromLTRB(2, 10, 70, 5),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: const [
                   Text(
-                    'Withdrawal',
-                    style: TextStyle(color: Colors.white),
+                    'Successful',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
-                    'Date',
+                    '21/10/2023',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -81,18 +71,14 @@ class _SuccesfulTabPageState extends State<SuccesfulTabPage> {
                     children: const [
                       Text(
                         '#',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       Text(
-                        'Amount',
-                        style: TextStyle(color: Colors.white),
+                        '100,000',
+                        style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
                     ],
                   ),
-                  const Text(
-                    'Successful',
-                    style: TextStyle(color: Colors.white),
-                  )
                 ],
               ),
             ),

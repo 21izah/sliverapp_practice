@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../constants/data_constant.dart';
+
 class ProcessingTabPage extends StatefulWidget {
   const ProcessingTabPage({Key? key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Theme.of(context).colorScheme.background,
       // appBar: AppBar(
       //   backgroundColor: Colors.pink,
       // ),
@@ -29,13 +31,13 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
     return Container(
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(
-          color: Colors.deepOrange,
+          color: Colors.blue,
           blurRadius: 15,
           offset: Offset(5, 5),
           spreadRadius: 2,
         ),
         BoxShadow(
-          color: Colors.deepOrange,
+          color: Colors.blue,
           blurRadius: 15,
           offset: Offset(-10, -10),
           spreadRadius: 2,
@@ -49,7 +51,7 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
           children: [
             Container(
               child: const CircleAvatar(
-                backgroundColor: Colors.deepOrange,
+                backgroundColor: Colors.blue,
                 child: Text('\$'),
               ),
             ),
@@ -57,16 +59,17 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
               margin: const EdgeInsets.fromLTRB(2, 10, 70, 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    'Withdrawal',
-                    style: TextStyle(color: Colors.white),
+                    'Processing',
+                    style: TextStyle(color: Colors.blue),
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
-                    'Date',
+                    '02/03/2023',
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -81,18 +84,14 @@ class _ProcessingTabPageState extends State<ProcessingTabPage> {
                     children: const [
                       Text(
                         '#',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       Text(
-                        'Amount',
-                        style: TextStyle(color: Colors.white),
+                        '5000',
+                        style: TextStyle(color: Colors.blue, fontSize: 20),
                       ),
                     ],
                   ),
-                  const Text(
-                    'Successful',
-                    style: TextStyle(color: Colors.white),
-                  )
                 ],
               ),
             ),

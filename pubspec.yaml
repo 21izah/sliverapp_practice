@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.1 <3.0.0'
+  sdk: ">=2.18.1 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,84 +32,110 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  curved_navigation_bar: ^1.0.3 #latest version
 
- 
-  # flutter_local_notifications: ^7.0.0
-  
-  firebase_core: ^2.1.1
- 
-  firebase_auth: ^4.0.2
+  firebase_auth: ^4.4.2
+
   firebase_storage: ^11.0.6
-  
-  cloud_firestore: ^4.1.0
+
+  cloud_firestore: ^4.5.3
+
   cloud_functions: ^4.0.5
-  
-  firebase_messaging: ^14.1.1
+
+  firebase_messaging: ^14.4.1
+
+  firebase_in_app_messaging: ^0.7.0+7
+
+  clipboard: ^0.1.3
+
+  page_transition: ^2.0.9
+
+  provider: ^6.0.5
+
   flutter_carousel_slider: ^1.0.8
-  liquid_pull_to_refresh:  ^3.0.0
+  liquid_pull_to_refresh: ^3.0.0
   smooth_page_indicator: ^1.0.0+2
-  url_launcher:  ^6.1.6
-  shared_preferences: ^2.0.15 
+  url_launcher: ^6.1.6
+  shared_preferences: ^2.0.15
   flutter_tawk: ^0.1.0
   webview_flutter: ^3.0.4
-  avatar_glow: ^2.0.2
+
   animated_text_kit: ^4.2.2
   animated_splash_screen: ^1.3.0
- 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_native_splash: ^2.2.14
+
   lottie: ^2.0.0
-  provider: ^6.0.4
+
   path_provider: ^2.0.11
   liquid_swipe: ^3.0.0
-  flutter_launcher_icons: "^0.11.0"
-  firebase_in_app_messaging: ^0.7.0+7
   get: ^4.6.5
-  flutter_riverpod: ^2.1.1
-  http: ^0.13.5
-  bamboo: ^1.0.1
-  equatable: ^2.0.5
-  
-  
-  
-  
-  
-  
-  
 
+  http: ^0.13.5
+
+  font_awesome_flutter: ^10.3.0
+  hidden_drawer_menu: ^3.0.1
+
+  json_annotation: ^4.8.0
+  gsheets: ^0.4.2
+  flutter_flushbar: ^0.0.2
+
+  supabase_flutter: ^1.4.1
+  firebase_crashlytics: ^3.0.15
+
+  # slide_to_act: ^2.0.1
+
+  flutter_animate: ^4.1.1+1
+  google_nav_bar: ^5.0.6
+  eva_icons_flutter: ^3.1.0
+  unicons: ^2.1.1
+  simple_snackbar: ^1.0.2
+  country_picker: ^2.0.20
+  dropdown_button2: ^2.0.0
+  animated_snack_bar: ^0.3.1
+  modal_bottom_sheet: ^2.1.2
+
+  # flutter_native_splash: ^2.2.14
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^2.0.0
-  build_runner: ^2.3.2
-  
-  
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.1
+  flutter_launcher_icons: ^0.11.0
 
+  flutter_native_splash: ^2.2.14
 
-  
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/Cza_new_prev_ui.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
+flutter_native_splash:
+  color: "#000000"
+  image: lib/assets/Cza_new_prev_ui.png
 
-  
-  # flutter_launcher_icons: ^0.11.0
-  # flutter_launcher_name: ^0.0.1
-   
-
- 
-  
-
-
-
-
-
-
- 
+android_12:
+  color: "#000000"
+  image: lib/assets/Cza_new_prev_ui.png
+  icon_background_color: "#000000"
+  image_dark: lib/assets/Cza_new_prev_ui.png
+  color_dark: "#000000"
+  icon_background_color_dark: "#000000"
+  image_android: lib/assets/Cza_new_prev_ui.png
+  image_dark_android: lib/assets/Cza_new_prev_ui.png
+  color_android: "#000000"
+  color_dark_android: "#000000"
+  branding: lib/assets/Cza_new_prev_ui.png
+  branding_android: lib/assets/Cza_new_prev_ui.png
+  branding_dark_android: lib/assets/Cza_new_prev_ui.png
+  # android: false
+  # ios: false
+  # web: false
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -123,7 +149,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -178,6 +203,15 @@ flutter:
     - lib/assets/100440-monero.json
     - lib/assets/68435-busd.json
     - lib/assets/busd-unscreen.gif
+    - lib/assets/Cza_new_prev_ui.png
+    - lib/assets/Izah_homes_prev_ui.png
+    - lib/assets/whatsapp-button-call-attention-and-pause.json
+    - lib/assets/facebook-logo-effect.json
+    - lib/assets/tiktok-icon.json
+    - lib/assets/instagram-logo-effect.json
+    - lib/assets/success.png
+    - lib/assets/warning.png
+    - lib/assets/disappointment.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

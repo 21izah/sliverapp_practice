@@ -1,10 +1,11 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, depend_on_referenced_packages
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliverapp_practice/backend_page_operations/login_page_backend_operation.dart';
 import 'package:sliverapp_practice/pages/eigth_page.dart';
 import 'package:sliverapp_practice/pages/help_page.dart';
+import 'package:sliverapp_practice/pages/loginpage.dart';
 
 import 'package:sliverapp_practice/pages/sign_in_homepage.dart';
 import 'package:sliverapp_practice/pages/buy_page.dart';
@@ -72,7 +73,7 @@ class AdminDrawerWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.history_edu_rounded),
               title: const Text(
-                'Transaction History',
+                'Rates',
                 style: TextStyle(color: Colors.black),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -123,7 +124,7 @@ class AdminDrawerWidget extends StatelessWidget {
                 onTap: () => FirebaseAuth.instance.signOut().then(
                       (value) => Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) => const SignInHomePage(),
+                            builder: (context) => const LogInPage(),
                           ),
                           (route) => false),
                     )),

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:sliverapp_practice/backend_page_operations/login_page_backend_operation.dart';
