@@ -125,11 +125,11 @@ class ComfirmPinProvider with ChangeNotifier {
     // User? user = FirebaseAuth.instance.currentUser;
     DocumentSnapshot document1 = await FirebaseFirestore.instance
         .collection('UserPin')
-        .doc(user!.email)
+        .doc(user.email)
         .get();
     DocumentSnapshot document2 = await FirebaseFirestore.instance
         .collection('UserComfirmPin')
-        .doc(user!.email)
+        .doc(user.email)
         .get();
 
     dynamic UserPin1 = document1.get('First Pin');
@@ -148,88 +148,20 @@ class ComfirmPinProvider with ChangeNotifier {
         (UserPin4 == UserComfirmPin4)) {
       showSuccessMessage('Success');
       notifyListeners();
-
-      // showModalBottomSheet(
-      //   context: context,
-      //   builder: (context) {
-      //     return Container(
-      //       height: 400,
-      //       decoration: const BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      //       child:
-      //           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      //         Container(
-      //           height: 200,
-      //           width: 200,
-      //           child: Image.asset(
-      //             'lib/assets/success.png',
-      //             fit: BoxFit.scaleDown,
-      //           ),
-      //         ),
-      //         const SizedBox(
-      //           height: 10,
-      //         ),
-      //         const Text(
-      //           'Success!',
-      //           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //         ),
-      //       ]),
-      //     );
-      //   },
-      // );
-      // Future.delayed(Duration(seconds: 2), () {
-      //   Navigator.pop(context);
-      //   Navigator.of(context).pushAndRemoveUntil(
-      //       MaterialPageRoute(
-      //         builder: (context) => const SixthPage(),
-      //       ),
-      //       (route) => false);
-      // });
     } else {
+      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+      User? user = FirebaseAuth.instance.currentUser;
+      await _firestore.collection('UserComfirmPin').doc(user!.email).set(
+        {
+          'First Pin': 343434343443434344,
+          'Second Pin': 34343434,
+          'Third Pin': 34343434,
+          'Fourth Pin': 3434343453453453453,
+        },
+        SetOptions(merge: true),
+      );
       showErrorMessage('Error Incorrect Pin!');
       notifyListeners();
-
-      // showModalBottomSheet(
-      //   context: context,
-      //   builder: (context) {
-      //     return Container(
-      //       height: 400,
-      //       decoration: const BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      //       child:
-      //           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      //         // SizedBox(
-      //         //   height: 20,
-      //         // ),
-      //         Container(
-      //           height: 200,
-      //           width: 200,
-      //           child: Image.asset(
-      //             'lib/assets/warning.png',
-      //             fit: BoxFit.scaleDown,
-      //           ),
-      //         ),
-      //         const SizedBox(
-      //           height: 10,
-      //         ),
-      //         const Text(
-      //           'Error Incorrect Pin!',
-      //           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //         ),
-      //       ]),
-      //     );
-      //   },
-      // );
-      // Future.delayed(Duration(seconds: 2), () {
-      //   Navigator.pop(context);
-      //   Navigator.of(context).pushAndRemoveUntil(
-      //       MaterialPageRoute(
-      //         builder: (context) => const CreatePinScreen(),
-      //       ),
-      //       (route) => false);
-      // });
     }
   }
 }

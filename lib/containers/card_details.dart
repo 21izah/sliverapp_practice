@@ -4,8 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '../constants/data_constant.dart';
 import '../pages/fund_account_page.dart';
+import '../riverpod_practice/balance_obscure_provider.dart';
 
 class CardDetails extends StatelessWidget {
   final double cardBalance;
@@ -29,6 +31,8 @@ class CardDetails extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     User? user = FirebaseAuth.instance.currentUser;
 
+    final provider = Provider.of<BalanceObscureProvider>(context);
+
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -39,26 +43,14 @@ class CardDetails extends StatelessWidget {
       height: screenSize.height * 0.40,
       width: screenSize.width,
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SizedBox(
             height: 3,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   children: [
-          //     CircleAvatar(
-          //         radius: 50,
-          //         backgroundColor: Colors.transparent,
-          //         child: cardImage),
-          //   ],
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(
@@ -77,15 +69,50 @@ class CardDetails extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 5,
-                  // ),
-                  Text(
-                    '\$$cardBalance',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.background,
+                  Consumer<BalanceObscureProvider>(
+                    builder: (context, ki, _) => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ki.passwordObscured
+                            ? Text(
+                                '\$$cardBalance',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                ),
+                              )
+                            : Text(
+                                '***********',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
+                                ),
+                              ),
+                        GestureDetector(
+                          onTap: () => ki.obscure(),
+                          child: ki.passwordObscured
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.visibility,
+                                    color: Colors.deepOrange,
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    size: 25,
+                                    Icons.visibility_off,
+                                    color: Colors.deepOrange,
+                                  ),
+                                ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(

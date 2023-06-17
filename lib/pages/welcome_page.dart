@@ -1,19 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sliverapp_practice/containers/card_details.dart';
 import 'package:sliverapp_practice/containers/neuCoinContainer.dart';
 
 import 'package:lottie/lottie.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../containers/busd_container.dart';
 import '../containers/ethNeuContainer.dart';
 
+import '../containers/otherNeucaintainer.dart';
+import '../containers/usdt_container.dart';
+import '../riverpod_practice/balance_obscure_provider.dart';
+import '../riverpod_practice/change_light_dark_mode_provider.dart';
 import 'buy_page2.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/data_constant.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:async';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -23,7 +31,39 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  // final _cardController = PageController();
+  final _cardController = PageController(initialPage: 0);
+  Timer? _timer;
+
+  @override
+  void initState() {
+    // final provider = Provider.of<ChangeLightDarkMode>(context);
+    // provider.loadTheme();
+
+    super.initState();
+    startNavigationDelay();
+  }
+
+  @override
+  void dispose() {
+    _cardController.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void startNavigationDelay() {
+    _timer = Timer.periodic(Duration(seconds: 2), (_) {
+      final nextPage = _cardController.page!.toInt() + 1;
+      if (nextPage < 3) {
+        _cardController.animateToPage(nextPage,
+            duration: Duration(seconds: 3), curve: Curves.linear);
+      } else {
+        _cardController.animateToPage(0,
+            duration: Duration(seconds: 1), curve: Curves.linear);
+      }
+      // _cardController.nextPage(
+      //     duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,95 +189,161 @@ class _WelcomePageState extends State<WelcomePage> {
               width: screenSize.width - 10,
               child: ListView(children: [
                 Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          right: 5,
-                          bottom: 20,
-                        ),
-                        child: Container(
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  radius: 30,
-                                  child: Image.asset('lib/assets/usdt_.png')),
+                  SizedBox(
+                    height: 100,
+                    // color: Colors.amber,
+                    child: PageView(
+                      controller: _cardController,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            PageTransition(
+                              child: BuyPage2(),
+                              type: PageTransitionType.rightToLeft,
                             ),
-                            Text(
-                              'USDT',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ]),
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10)),
-                          height: 105,
-                          width: 105,
+                          ),
+                          child: UsdtContainer(
+                            coinName: 'USDT',
+                            coinImage:
+                                Image.asset('lib/assets/bitcoin_cash.png'),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 0.0,
-                          right: 5,
-                          bottom: 20,
-                        ),
-                        child: Container(
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  radius: 30,
-                                  child: Image.asset('lib/assets/busd1_.png')),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            PageTransition(
+                              child: BuyPage2(),
+                              type: PageTransitionType.rightToLeft,
                             ),
-                            Text(
-                              'BUSD',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                          ),
+                          child: BusdContainer(
+                            coinName: 'BUSD',
+                            coinImage:
+                                Image.asset('lib/assets/bitcoin_cash.png'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            PageTransition(
+                              child: BuyPage2(),
+                              type: PageTransitionType.rightToLeft,
                             ),
-                          ]),
-                          height: 105,
-                          width: 105,
-                          decoration: BoxDecoration(
-                              color: Colors.deepOrange,
-                              borderRadius: BorderRadius.circular(10)),
+                          ),
+                          child: OtherNeuContainer(
+                            coinName: 'Other',
+                            coinImage:
+                                Image.asset('lib/assets/bitcoin_cash.png'),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 0.0,
-                          right: 20,
-                          bottom: 20,
-                        ),
-                        child: Container(
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircleAvatar(
-                                  radius: 30,
-                                  child: Image.asset('lib/assets/monero.png')),
-                            ),
-                            Text(
-                              'Others',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ]),
-                          height: 105,
-                          width: 105,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                  SmoothPageIndicator(
+                    controller: _cardController,
+                    count: 3,
+                    effect: WormEffect(
+                      dotColor: Colors.black,
+                      activeDotColor: Colors.deepOrange,
+                      offset: 3,
+                      radius: 4,
+                      dotHeight: 4,
+                      dotWidth: 4,
+                    ),
+                    // effect: const ExpandingDotsEffect(
+                    //     activeDotColor: Colors.deepOrange, dotHeight: 10),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         left: 20.0,
+                  //         right: 5,
+                  //         bottom: 20,
+                  //       ),
+                  //       child: Container(
+                  //         child: Column(children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: CircleAvatar(
+                  //                 radius: 30,
+                  //                 child: Image.asset('lib/assets/usdt_.png')),
+                  //           ),
+                  //           Text(
+                  //             'USDT',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //             ),
+                  //           )
+                  //         ]),
+                  //         decoration: BoxDecoration(
+                  //             color: Colors.green,
+                  //             borderRadius: BorderRadius.circular(10)),
+                  //         height: 105,
+                  //         width: 105,
+                  //       ),
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         left: 0.0,
+                  //         right: 5,
+                  //         bottom: 20,
+                  //       ),
+                  //       child: Container(
+                  //         child: Column(children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: CircleAvatar(
+                  //                 radius: 30,
+                  //                 child: Image.asset('lib/assets/busd1_.png')),
+                  //           ),
+                  //           Text(
+                  //             'BUSD',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //             ),
+                  //           ),
+                  //         ]),
+                  //         height: 105,
+                  //         width: 105,
+                  //         decoration: BoxDecoration(
+                  //             color: Colors.deepOrange,
+                  //             borderRadius: BorderRadius.circular(10)),
+                  //       ),
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         left: 0.0,
+                  //         right: 20,
+                  //         bottom: 20,
+                  //       ),
+                  //       child: Container(
+                  //         child: Column(children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: CircleAvatar(
+                  //                 radius: 30,
+                  //                 child: Image.asset('lib/assets/monero.png')),
+                  //           ),
+                  //           Text(
+                  //             'Others',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //             ),
+                  //           )
+                  //         ]),
+                  //         height: 105,
+                  //         width: 105,
+                  //         decoration: BoxDecoration(
+                  //             color: Colors.red,
+                  //             borderRadius: BorderRadius.circular(10)),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   Column(children: [
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
@@ -263,42 +369,6 @@ class _WelcomePageState extends State<WelcomePage> {
                         coinImage: Image.asset('lib/assets/Ethereum_.png'),
                       ).animate().slideX(duration: 600.ms),
                     ),
-                    // GestureDetector(
-                    //   onTap: () => Navigator.of(context).push(
-                    //     PageTransition(
-                    //       child: BuyPage2(),
-                    //       type: PageTransitionType.rightToLeft,
-                    //     ),
-                    //   ),
-                    //   child: UsdtContainer(
-                    //     coinName: 'USDT',
-                    //     coinImage: Image.asset('lib/assets/usdt_.png'),
-                    //   ).animate().slide(duration: 650.ms),
-                    // ),
-                    // GestureDetector(
-                    //   onTap: () => Navigator.of(context).push(
-                    //     PageTransition(
-                    //       child: BuyPage2(),
-                    //       type: PageTransitionType.rightToLeft,
-                    //     ),
-                    //   ),
-                    //   child: BusdContainer(
-                    //     coinName: 'BUSD',
-                    //     coinImage: Image.asset('lib/assets/busd1_.png'),
-                    //   ).animate().slideX(duration: 700.ms),
-                    // ),
-                    // GestureDetector(
-                    //   onTap: () => Navigator.of(context).push(
-                    //     PageTransition(
-                    //       child: BuyPage2(),
-                    //       type: PageTransitionType.rightToLeft,
-                    //     ),
-                    //   ),
-                    //   child: OtherNeuContainer(
-                    //     coinName: 'Other Crypto',
-                    //     coinImage: Image.asset('lib/assets/monero.png'),
-                    //   ).animate().slide(duration: 750.ms),
-                    // ),
                     SizedBox(
                       height: 200,
                     ),
@@ -397,50 +467,50 @@ class _WelcomePageState extends State<WelcomePage> {
                 //
                 // ffgiefgiww
                  //  Column(
-        //   children: [
-        //     SizedBox(
-        //       height: 300,
-        //       // color: Colors.amber,
-        //       child: PageView(
-        //         controller: _cardController,
-        //         scrollDirection: Axis.horizontal,
-        //         children: [
-        //           const CardDetails(
-        //             cardColor: Colors.deepOrange,
-        //             cardBalance: 455656.00,
-        //             cardNumber: 2355,
-        //             cardExpiryMonth: 23,
-        //             cardExpiryYear: 20,
-        //           ),
-        //           const CardDetails(
-        //             cardColor: Colors.green,
-        //             cardBalance: 455656.00,
-        //             cardNumber: 2355,
-        //             cardExpiryMonth: 23,
-        //             cardExpiryYear: 20,
-        //           ),
-        //           const CardDetails(
-        //             cardColor: Colors.blue,
-        //             cardBalance: 455656.00,
-        //             cardNumber: 2355,
-        //             cardExpiryMonth: 23,
-        //             cardExpiryYear: 20,
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       height: 9,
-        //     ),
-        //     SmoothPageIndicator(
-        //       controller: _cardController,
-        //       count: 3,
-        //       effect: const ExpandingDotsEffect(
-        //           activeDotColor: Colors.deepOrange, dotHeight: 10),
-        //     ),
-        //     const SizedBox(
-        //       height: 15,
-        //     ),
+          // children: [
+          //   SizedBox(
+          //     height: 300,
+          //     // color: Colors.amber,
+          //     child: PageView(
+          //       controller: _cardController,
+          //       scrollDirection: Axis.horizontal,
+          //       children: [
+          //         const CardDetails(
+          //           cardColor: Colors.deepOrange,
+          //           cardBalance: 455656.00,
+          //           cardNumber: 2355,
+          //           cardExpiryMonth: 23,
+          //           cardExpiryYear: 20,
+          //         ),
+          //         const CardDetails(
+          //           cardColor: Colors.green,
+          //           cardBalance: 455656.00,
+          //           cardNumber: 2355,
+          //           cardExpiryMonth: 23,
+          //           cardExpiryYear: 20,
+          //         ),
+          //         const CardDetails(
+          //           cardColor: Colors.blue,
+          //           cardBalance: 455656.00,
+          //           cardNumber: 2355,
+          //           cardExpiryMonth: 23,
+          //           cardExpiryYear: 20,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          //   const SizedBox(
+          //     height: 9,
+          //   ),
+            // SmoothPageIndicator(
+            //   controller: _cardController,
+            //   count: 3,
+            //   effect: const ExpandingDotsEffect(
+            //       activeDotColor: Colors.deepOrange, dotHeight: 10),
+            // ),
+            // const SizedBox(
+            //   height: 15,
+            // ),
         //     SizedBox(
         //       height: 150,
         //       child: ListView(

@@ -9,6 +9,7 @@ import '../pages/welcomesixth_page.dart';
 // import '../constants/routers.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../widgets/hidden_drawer.dart';
 
 class ChangeButtonTextProvider with ChangeNotifier {
   // final BuildContext context;
@@ -138,7 +139,7 @@ class ChangeButtonTextProvider with ChangeNotifier {
         final role = snapshot.get('USDT BEP-20 Wallet Address');
 
         if (role == 'admin') {
-          Get.off(() => SixthPage());
+          Get.off(() => HiddenDrawer());
           isLoading = false;
           notifyListeners();
         } else {

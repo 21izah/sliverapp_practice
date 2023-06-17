@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, must_call_super, depend_on_referenced_packages, use_build_context_synchronously, unused_import
+// ignore_for_file: avoid_unnecessary_containers, must_call_super, depend_on_referenced_packages, use_build_context_synchronously, unused_import, unused_field
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

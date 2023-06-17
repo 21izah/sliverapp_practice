@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element, sized_box_for_whitespace
+// ignore_for_file: unused_element, sized_box_for_whitespace, unused_import, unused_field, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

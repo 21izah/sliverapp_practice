@@ -102,220 +102,217 @@ class _BuyPage2State extends State<BuyPage2> {
                         animSpeedFactor: 2,
                         backgroundColor: Colors.deepOrange,
                         showChildOpacityTransition: false,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 70,
-                              ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 70,
+                            ),
 
-                              StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('Users')
-                                      .doc(user!.email)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      final userData = snapshot.data!.data()
-                                          as Map<String, dynamic>;
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(user!.email)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    final userData = snapshot.data!.data()
+                                        as Map<String, dynamic>;
 
-                                      return Text(
-                                        'Rate: ${userData['Buy Rate']}',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.deepOrange),
-                                      );
-                                    } else if (snapshot.hasError) {
-                                      return Text('${snapshot.error}');
-                                    } else {
-                                      return CircularProgressIndicator();
-                                    }
-                                  }),
-                              const SizedBox(
-                                height: 10,
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    child: const Text(
-                                      'YOU PAY',
+                                    return Text(
+                                      'Rate: ${userData['Buy Rate']}',
                                       style: TextStyle(
-                                          color: Colors.deepOrange,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.deepOrange),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                }),
+                            const SizedBox(
+                              height: 10,
+                            ),
 
-                              // InputAmountTextfield(),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (value) {
-                                    double? number = double.tryParse(value);
-                                    if (number != null) {
-                                      _nairaController.text =
-                                          (number / _username.get(14))
-                                              .toString();
-                                    } else {
-                                      _nairaController.text = '';
-                                    }
-                                  },
-                                  controller: _btcController,
-                                  style: TextStyle(
-                                    color: primaryColor,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  child: const Text(
+                                    'YOU PAY',
+                                    style: TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  cursorColor: Colors.deepOrange,
-                                  decoration: InputDecoration(
-                                      suffixText: "USD",
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.grey, width: 2),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      hintStyle: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: screenSize.width * 0.03),
-                                      hintText: 'Input Amount In USD',
-                                      filled: true,
-                                      fillColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      )),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              ],
+                            ),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    child: const Text(
-                                      'YOU GET',
-                                      style: TextStyle(
-                                          color: Colors.deepOrange,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // YouGetTextfield(),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  readOnly: true,
-                                  // onChanged: (value) {},
-                                  controller: _nairaController,
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                  ),
-                                  cursorColor: Colors.deepOrange,
-                                  decoration: InputDecoration(
-                                      suffixText: "BTC",
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      hintStyle: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: screenSize.width * 0.03),
-                                      hintText: 'YOU GET ',
-                                      filled: true,
-                                      fillColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      )),
+                            // InputAmountTextfield(),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  double? number = double.tryParse(value);
+                                  if (number != null) {
+                                    _nairaController.text =
+                                        (number / _username.get(14)).toString();
+                                  } else {
+                                    _nairaController.text = '';
+                                  }
+                                },
+                                controller: _btcController,
+                                style: TextStyle(
+                                  color: primaryColor,
                                 ),
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 20),
-                                    child: const Text(
-                                      'Your BTC Wallet Address',
-                                      style: TextStyle(
-                                          color: Colors.deepOrange,
-                                          fontWeight: FontWeight.bold),
+                                cursorColor: Colors.deepOrange,
+                                decoration: InputDecoration(
+                                    suffixText: "USD",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 2),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                  ),
-                                ],
+                                    hintStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: screenSize.width * 0.03),
+                                    hintText: 'Input Amount In USD',
+                                    filled: true,
+                                    fillColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
                               ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
 
-                              // YouGetTextfield(),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: FutureBuilder<DocumentSnapshot>(
-                                  future: FirebaseFirestore.instance
-                                      .collection('Users')
-                                      .doc(user.email)
-                                      .get(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      Map<String, dynamic> data = snapshot.data!
-                                          .data() as Map<String, dynamic>;
-                                      return TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        readOnly: true,
-                                        // onChanged: (value) {},
-                                        controller: _btcwalletController,
-                                        cursorColor: Colors.deepOrange,
-                                        decoration: InputDecoration(
-                                            suffixText: "BTC",
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  child: const Text(
+                                    'YOU GET',
+                                    style: TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            // YouGetTextfield(),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                readOnly: true,
+                                // onChanged: (value) {},
+                                controller: _nairaController,
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                                cursorColor: Colors.deepOrange,
+                                decoration: InputDecoration(
+                                    suffixText: "BTC",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    hintStyle: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: screenSize.width * 0.03),
+                                    hintText: 'YOU GET ',
+                                    filled: true,
+                                    fillColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                              ),
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 20),
+                                  child: const Text(
+                                    'Your BTC Wallet Address',
+                                    style: TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            // YouGetTextfield(),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: FutureBuilder<DocumentSnapshot>(
+                                future: FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(user.email)
+                                    .get(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    Map<String, dynamic> data = snapshot.data!
+                                        .data() as Map<String, dynamic>;
+                                    return TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      readOnly: true,
+                                      // onChanged: (value) {},
+                                      controller: _btcwalletController,
+                                      cursorColor: Colors.deepOrange,
+                                      decoration: InputDecoration(
+                                          suffixText: "BTC",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          hintStyle: TextStyle(
+                                              color: primaryColor,
+                                              fontSize:
+                                                  screenSize.width * 0.03),
+                                          hintText:
+                                              '${data['BTC Wallet Address']}',
+                                          filled: true,
+                                          fillColor: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                              width: 2,
                                             ),
-                                            hintStyle: TextStyle(
-                                                color: primaryColor,
-                                                fontSize:
-                                                    screenSize.width * 0.03),
-                                            hintText:
-                                                '${data['BTC Wallet Address']}',
-                                            filled: true,
-                                            fillColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Colors.grey,
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            )),
-                                      );
-                                    } else {
-                                      return Text('loading');
-                                    }
-                                  },
-                                ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          )),
+                                    );
+                                  } else {
+                                    return Text('loading');
+                                  }
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

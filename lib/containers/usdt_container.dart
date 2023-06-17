@@ -21,7 +21,7 @@ class UsdtContainer extends StatelessWidget {
         bottom: 5,
       ),
       child: Container(
-        height: 150,
+        height: 100,
         width: 400,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: Colors.green),

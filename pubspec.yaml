@@ -58,7 +58,9 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.0
   smooth_page_indicator: ^1.0.0+2
   url_launcher: ^6.1.6
-  shared_preferences: ^2.0.15
+
+  shared_preferences: ^2.1.2
+
   flutter_tawk: ^0.1.0
   webview_flutter: ^3.0.4
 

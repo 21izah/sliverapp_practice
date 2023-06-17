@@ -131,29 +131,29 @@ class VerificationButton with ChangeNotifier {
       notifyListeners();
     }
 
-    void checkPin() async {
-      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-      User? user = FirebaseAuth.instance.currentUser;
-      DocumentSnapshot document2 =
-          await _firestore.collection('UserComfirmPin').doc(user!.email).get();
+    // void checkPin() async {
+    //   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    //   User? user = FirebaseAuth.instance.currentUser;
+    //   DocumentSnapshot document2 =
+    //       await _firestore.collection('UserComfirmPin').doc(user!.email).get();
 
-      dynamic UserComfirmPin1 = document2.get('First Pin');
-      dynamic UserComfirmPin2 = document2.get('Second Pin');
-      dynamic UserComfirmPin3 = document2.get('Third Pin');
-      dynamic UserComfirmPin4 = document2.get('Fourth Pin');
+    //   dynamic UserComfirmPin1 = document2.get('First Pin');
+    //   dynamic UserComfirmPin2 = document2.get('Second Pin');
+    //   dynamic UserComfirmPin3 = document2.get('Third Pin');
+    //   dynamic UserComfirmPin4 = document2.get('Fourth Pin');
 
-      if ((firstPin == UserComfirmPin1) &&
-          (secondPin == UserComfirmPin2) &&
-          (thirdPin == UserComfirmPin3) &&
-          (fourthPin == UserComfirmPin4)) {
-        showSuccessMessage('Success');
-        notifyListeners();
-      } else {
-        isLoading = false;
-        notifyListeners();
-        showErrorMessage('Error Incorrect Pin!');
-        notifyListeners();
-      }
-    }
+    //   if ((firstPin == UserComfirmPin1) &&
+    //       (secondPin == UserComfirmPin2) &&
+    //       (thirdPin == UserComfirmPin3) &&
+    //       (fourthPin == UserComfirmPin4)) {
+    //     showSuccessMessage('Success');
+    //     notifyListeners();
+    //   } else {
+    //     isLoading = false;
+    //     notifyListeners();
+    //     showErrorMessage('Error Incorrect Pin!');
+    //     notifyListeners();
+    //   }
+    // }
   }
 }

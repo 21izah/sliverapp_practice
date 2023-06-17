@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:sliverapp_practice/pages/declined_tab_page.dart';
@@ -32,35 +32,18 @@ class _TabBarWidgetState extends State<TabBarWidget> {
             ),
             TabBar(indicatorColor: Colors.deepOrange, tabs: [
               Tab(
-                ///  text: 'Successful',
-                // icon: Icon(
-                //   Icons.handshake,
-                //   color: Colors.green,
-                // ),
                 child: Text(
                   'SUCCESSFUL',
                   style: TextStyle(color: Colors.green),
                 ),
               ),
               Tab(
-                //  text: 'Processing',
-                // icon: Icon(
-                //   Icons.cancel,
-                //   color: Colors.red,
-                // ),
-
                 child: Text(
                   'DECLINED',
                   style: TextStyle(color: Colors.red),
                 ),
               ),
               Tab(
-                //  text: 'Processing',
-                // icon: Icon(
-                //   Icons.cancel,
-                //   color: Colors.blue,
-                // ),
-
                 child: Text(
                   'PROCESSING',
                   style: TextStyle(color: Colors.blue),
@@ -70,14 +53,8 @@ class _TabBarWidgetState extends State<TabBarWidget> {
             Expanded(
               child: TabBarView(children: [
                 SuccesfulTabPage(),
-                ProcessingTabPage(),
                 DeclinedTabPage(),
-
-                // Center(child: Text("BUY")),
-
-                // Center(child: Text("SELL")),
-
-                // Center(child: Text("Dront buy")),
+                ProcessingTabPage(),
               ]),
             )
           ],

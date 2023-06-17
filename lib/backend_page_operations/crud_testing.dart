@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, depend_on_referenced_packages, unused_local_variable
+// ignore_for_file: unused_import, depend_on_referenced_packages, unused_local_variable, unused_element
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';

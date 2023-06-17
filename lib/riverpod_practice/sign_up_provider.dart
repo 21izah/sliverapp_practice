@@ -1,4 +1,6 @@
 // import 'package:animated_snack_bar/animated_snack_bar.dart';
+// ignore_for_file: unused_local_variable, unused_element
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';

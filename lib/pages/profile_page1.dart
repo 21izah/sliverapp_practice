@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:sliverapp_practice/pages/customer_care_page.dart';
@@ -13,12 +13,14 @@ import '../containers/darkmode_lightmode.dart';
 import '../containers/option_selection.dart';
 import '../riverpod_practice/change_light_dark_mode_provider.dart';
 import '../riverpod_practice/logout_button_text.dart';
-import 'forgot_password.dart';
-import 'loginpage.dart';
+
+import '../riverpod_practice/theme_provider.dart';
 import '../widgets/drop_down_button2.dart';
 import 'security_page.dart';
-import 'sign_in_homepage.dart';
 import 'terms_and_condition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final bucketGlobsl = PageStorageBucket();
 
 class ProfilePage1 extends StatefulWidget {
   ProfilePage1({super.key});
@@ -28,6 +30,38 @@ class ProfilePage1 extends StatefulWidget {
 }
 
 class _ProfilePage1State extends State<ProfilePage1> {
+  // late ChangeLightDarkMode appState;
+//   final _mybox = Hive.box('isDarkModeOn');
+
+//   @override
+//   void initState()  {
+//     // final prefs = await SharedPreferences.getInstance();
+//     // prefs.getBool('key');
+
+//     // print(prefs.getBool('key'));
+//     // Hive.openBox('isDarkModeOn');
+//     // _mybox.get('isDarkModeOn');
+// //     if (_mybox.get('isDarkModeOn') == null) {
+// //       // deflaut toggle posiion
+// //       // toggleColorScheme(to);
+// //     } else {
+// // // load stored postion
+// //       // loadSavedState();
+// //     }
+
+//     // update the new toggle position
+//     super.initState();
+//     // appState = Provider.of<ChangeLightDarkMode>(context, listen: false);
+//     // appState.loadSavedState();
+//   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   appState.saveState();
+  //   super.dispose();
+  // }
+
   bool islightmodeEnabled = true;
 
   void toggleColorScheme(bool value) {
@@ -38,9 +72,7 @@ class _ProfilePage1State extends State<ProfilePage1> {
 
   @override
   Widget build(BuildContext context) {
-    // final ColorScheme colorSchemes =
-    //     islightmodeEnabled ? ColorScheme.light() : ColorScheme.dark();
-
+    final themeProvider = Provider.of<ThemeProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -156,15 +188,28 @@ class _ProfilePage1State extends State<ProfilePage1> {
             ),
           ),
           Consumer<ChangeLightDarkMode>(
-            builder: (context, su, _) => LightModeSwitch(
-              textHeaderColor: Colors.black,
-              iconImage: Icon(
-                Icons.color_lens_outlined,
-                color: Colors.amber[700],
+            builder: (context, su, _) => PageStorage(
+              bucket: bucketGlobsl,
+              child: LightModeSwitch(
+                textHeaderColor: Colors.black,
+                iconImage: Icon(
+                  Icons.color_lens_outlined,
+                  color: Colors.amber[700],
+                ),
+                TextHeader: su.isDarkmodeEnabled ? 'Dark Mode' : 'Light Mode',
               ),
-              TextHeader: su.isDarkmodeEnabled ? 'Dark Mode' : 'Light Mode',
             ),
           ),
+          // Consumer<ThemeProvider>(
+          //   builder: (context, su, _) => LightModeSwitch(
+          //     textHeaderColor: Colors.black,
+          //     iconImage: Icon(
+          //       Icons.color_lens_outlined,
+          //       color: Colors.amber[700],
+          //     ),
+          //     TextHeader: su.isDarkmodeEnabled ? 'Dark Mode' : 'Light Mode',
+          //   ),
+          // ),
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(

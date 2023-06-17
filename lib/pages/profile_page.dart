@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls, depend_on_referenced_packages
+// ignore_for_file: unused_import, avoid_function_literals_in_foreach_calls, depend_on_referenced_packages, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

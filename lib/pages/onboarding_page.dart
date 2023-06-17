@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers, use_build_context_synchronously, depend_on_referenced_packages
+// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers, use_build_context_synchronously, depend_on_referenced_packages, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

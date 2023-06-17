@@ -125,17 +125,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     "Continue",
                     style: TextStyle(color: Colors.white),
                   )),
-
-                  //  ElevatedButton(
-                  //   onPressed: () {
-
-                  //   },
-                  //   style: ElevatedButton.styleFrom(
-
-                  //       backgroundColor: Colors.deepOrange,
-                  //       foregroundColor: Colors.white),
-
-                  // ),
                 ),
               )
             ]),
