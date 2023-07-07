@@ -48,4 +48,43 @@ class ApiProvider {
       throw Exception('Failed to load Api Data');
     }
   }
+
+  Future postrequest() async {
+    // API endPoint URL
+    var url = Uri.parse(
+        'http://restapi.adequateshop.com/api/authaccount/registration');
+
+// Request body
+    var requestBody = {
+      'name': 'John Doe',
+      'email': 'johndoe@example.com',
+      'password': 123456,
+    };
+
+    // Encode requestBody as JSON or convert to JSON format
+
+    var body2 = convert.jsonEncode(requestBody);
+    print(body2);
+
+    var headers = {
+      'content-Type': 'application/json',
+      // 'Authorization': 'Bearer ${token}'
+    };
+
+    // making post Request
+
+    var response = await http.post(
+      url,
+      body: body2,
+      headers: headers,
+    );
+
+    // checking response status
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var responseData = convert.jsonDecode(response.body);
+      print(responseData);
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
 }
