@@ -24,7 +24,11 @@ class OtherNeuContainer extends StatelessWidget {
         height: 150,
         width: 400,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.purple),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.purple),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

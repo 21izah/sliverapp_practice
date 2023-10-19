@@ -21,55 +21,91 @@ class _DropDownButton2State extends State<DropDownButton2> {
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    return DropdownButton2(
-      style: TextStyle(
-        color: Theme.of(context).colorScheme.secondary,
-      ),
-      barrierColor: Colors.transparent,
-      underline: Container(),
-      hint: Text(
-        'Personal Information',
-        style: TextStyle(fontSize: 14, color: blackColor),
-      ),
-      items: items
-          .map((item) => DropdownMenuItem<String>(
-                value: item,
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ))
-          .toList(),
-      value: selectedValue,
-      onChanged: (value) {
-        setState(() {
-          selectedValue = value as String;
-
-          if (selectedValue == 'My Profile') {
-            Navigator.of(context).push(PageTransition(
-              child: ProfilePage(),
-              type: PageTransitionType.rightToLeft,
-            ));
-          } else if (selectedValue == 'Bank Account') {
-            Navigator.of(context).push(PageTransition(
-              child: CreatePinScreen(),
-              type: PageTransitionType.rightToLeft,
-            ));
-          }
-        });
-      },
-      buttonStyleData: ButtonStyleData(
-          padding: const EdgeInsets.all(10),
-          height: 70,
-          width: 400,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
+    final screenSize = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.tertiary,
           )),
-      menuItemStyleData: const MenuItemStyleData(
-        height: 40,
+      child: DropdownButton2(
+        // customButton: Icon(
+        //   Icons.person_2_rounded,
+        //   size: 50,
+        //   shadows: [
+        //     BoxShadow(
+        //       color: Colors.deepOrange,
+        //       offset: Offset(2, 2),
+        //     )
+        //   ],
+        // ),
+        iconStyleData: IconStyleData(
+          // icon: Icon(Icons.arrow_downward_outlined),
+          iconEnabledColor: Colors.amber,
+          iconDisabledColor: Colors.blue,
+        ),
+        style: TextStyle(
+          color: Colors.amber,
+        ),
+        barrierColor: Colors.transparent,
+        underline: Container(),
+        hint: Text(
+          'Personal Information',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
+        ),
+        items: items
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                ))
+            .toList(),
+        value: selectedValue,
+        onChanged: (value) {
+          setState(() {
+            selectedValue = value as String;
+
+            if (selectedValue == 'My Profile') {
+              Navigator.of(context).push(PageTransition(
+                child: ProfilePage(),
+                type: PageTransitionType.rightToLeft,
+              ));
+            } else if (selectedValue == 'Bank Account') {
+              Navigator.of(context).push(PageTransition(
+                child: CreatePinScreen(),
+                type: PageTransitionType.rightToLeft,
+              ));
+            }
+          });
+        },
+        dropdownStyleData: DropdownStyleData(
+          width: screenSize.width * 0.4,
+          offset: Offset(10, 10),
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        buttonStyleData: ButtonStyleData(
+            padding: const EdgeInsets.all(10),
+            height: screenSize.height * 0.07,
+            width: screenSize.width - 10,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: BorderRadius.circular(10),
+            )),
+        menuItemStyleData: const MenuItemStyleData(
+          height: 40,
+        ),
       ),
     );
   }

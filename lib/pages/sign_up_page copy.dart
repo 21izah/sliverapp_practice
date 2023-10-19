@@ -26,7 +26,9 @@ class SignUPpage2 extends StatefulWidget {
 }
 
 class _SignUPpage2State extends State<SignUPpage2> {
+  final _formKey = GlobalKey<FormState>();
   int selectedIndex = 1;
+  bool isChecked = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -42,95 +44,6 @@ class _SignUPpage2State extends State<SignUPpage2> {
       return false;
     }
   }
-
-// sign up function
-  // void signUp() async {
-  //   User? user = FirebaseAuth.instance.currentUser;
-
-  //   // circular dialog
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return const Center(
-  //             child: CircularProgressIndicator(
-  //           valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-  //           backgroundColor: Colors.black,
-  //           strokeWidth: 5,
-  //           color: Colors.black,
-  //         ));
-  //       });
-
-  //   try {
-  //     if (_passwordController.text.trim() ==
-  //         _comfirmpasswordController.text.trim()) {
-  //       // create user
-  //       UserCredential userCredential =
-  //           await _auth.createUserWithEmailAndPassword(
-  //               email: _emailController.text.trim(),
-  //               password: _passwordController.text.trim());
-
-  //       _firestore.collection('Users').doc(userCredential.user!.email).set(
-  //         {
-  //           'First Name': _firstnameController.text.trim(),
-  //           'Other Name': _othernameController.text.trim(),
-  //           'Surname': _surnameController.text.trim(),
-  //           'Email': _emailController.text.trim(),
-  //           'Phone Number': _phoneNumberController.text.trim(),
-  //           'BTC Wallet Address': _btcWalletController.text.trim(),
-  //           'Ethereum Wallet Address': _ethereumWalletController.text.trim(),
-  //           'USDT TRC-20 Wallet Address':
-  //               _usdtTrc20WalletController.text.trim(),
-  //           'USDT BEP-20 Wallet Address': _usdtBep20Controller.text.trim(),
-  //           'USDT Polygon Wallet Address': _usdtPolygonController.text.trim(),
-  //           'USDT Solana Wallet Address': _usdtSolanaController.text.trim(),
-  //           'BUSD BEP-20 WAllet Address': _busdBep20Controller.text.trim(),
-  //           'BUSD Polygon Wallet Address': _busdPolygonController.text.trim(),
-  //           'Buy Rate': 750,
-  //           'Sell Rate': 750,
-  //         },
-  //         // SetOptions(merge: true),
-  //       );
-
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(
-  //             builder: (context) => const CreatePinScreen(),
-  //           ),
-  //           (route) => false);
-  //     } else {
-  //       Navigator.pop(context);
-  //       showErrorMessage("Password don't match");
-  //     }
-  //   } on FirebaseAuthException catch (e) {
-  //     Navigator.pop(context);
-  //     showErrorMessage(e.code);
-  //   }
-  // }
-
-  // void showErrorMessage(String message) {
-  //   AnimatedSnackBar(
-  //     mobileSnackBarPosition: MobileSnackBarPosition.top,
-  //     builder: ((context) {
-  //       return Container(
-  //         decoration: BoxDecoration(
-  //           color: Color.fromARGB(255, 180, 22, 10),
-  //           borderRadius: BorderRadius.circular(10),
-  //         ),
-  //         padding: const EdgeInsets.all(8),
-  //         // color: Colors.green,
-  //         height: 60,
-
-  //         width: 350,
-  //         child: Center(
-  //             child: Text(
-  //           message,
-  //           style: TextStyle(
-  //             color: whiteColor,
-  //           ),
-  //         )),
-  //       );
-  //     }),
-  //   ).show(context);
-  // }
 
   final _firstnameController = TextEditingController();
 
@@ -201,7 +114,7 @@ class _SignUPpage2State extends State<SignUPpage2> {
           Column(
             children: [
               Container(
-                height: screenSize.height * 0.3,
+                height: screenSize.height * 0.25,
                 decoration: BoxDecoration(
                   color: primaryColor,
                   borderRadius: BorderRadius.only(
@@ -209,298 +122,402 @@ class _SignUPpage2State extends State<SignUPpage2> {
                       ),
                 ),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 40),
-                          child: Text(
-                            'Welcome',
-                            style: TextStyle(fontSize: 50, color: whiteColor),
-                          ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: screenSize.height * 0.020,
+                        ),
+                        child: Text(
+                          'Welcome'.tr,
+                          style: TextStyle(fontSize: 50, color: whiteColor),
                         ),
                       ),
-                      // const SizedBox(
-                      //   height: 0.3,
-                      // ),
-                      Center(
-                        child: Container(
-                          child: Text(
-                            "Let's Know you better",
-                            style: TextStyle(fontSize: 15, color: whiteColor),
-                          ),
+                    ),
+                    // const SizedBox(
+                    //   height: 0.3,
+                    // ),
+                    Center(
+                      child: Container(
+                        child: Text(
+                          "Let's Know you better".tr,
+                          style: TextStyle(fontSize: 15, color: whiteColor),
                         ),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
               Container(
-                height: screenSize.height * 0.7,
+                height: screenSize.height * 0.75,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                   ),
                 ),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: screenSize.height * 0.04,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: screenSize.width * 0.4,
-                              height: screenSize.height * 0.07,
-                              margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                              child: TextFormField(
-                                cursorColor: primaryColor,
-                                style: TextStyle(color: primaryColor),
-                                controller: _firstnameController,
-                                decoration: InputDecoration(
-                                    hintText: 'First Name',
-                                    hintStyle: TextStyle(
-                                        color: blackColor,
-                                        fontSize: screenSize.width * 0.03),
-                                    filled: true,
-                                    fillColor: Colors.grey[200],
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                              ),
-                            ),
-                            Container(
-                              width: screenSize.width * 0.4,
-                              height: screenSize.height * 0.07,
-                              margin: const EdgeInsets.fromLTRB(0, 5, 20, 5),
-                              child: TextFormField(
-                                style: TextStyle(color: primaryColor),
-                                cursorColor: primaryColor,
-                                controller: _surnameController,
-                                decoration: InputDecoration(
-                                    hintText: 'Surname',
-                                    hintStyle: TextStyle(
-                                        color: blackColor,
-                                        fontSize: screenSize.width * 0.03),
-                                    filled: true,
-                                    fillColor: Colors.grey[200],
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                              ),
-                            ),
-                          ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: screenSize.width * 0.4,
-                            height: screenSize.height * 0.07,
-                            margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                            child: TextFormField(
-                              style: TextStyle(color: primaryColor),
-                              cursorColor: primaryColor,
-                              controller: _usernameController,
-                              decoration: InputDecoration(
-                                  hintText: 'Username',
-                                  hintStyle: TextStyle(
-                                      color: blackColor,
-                                      fontSize: screenSize.width * 0.03),
-                                  filled: true,
-                                  fillColor: Colors.grey[200],
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10))),
-                            ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: screenSize.height * 0.04,
+                        ),
+                        SizedBox(
+                          height: screenSize.height * 0.01,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(1.0),
+                          margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'First Name is required'.tr;
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: primaryColor),
+                            cursorColor: primaryColor,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _firstnameController,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(
+                                  screenSize.height * 0.01,
+                                ),
+                                hintText: 'First Name'.tr,
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenSize.width * 0.03),
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(5))),
                           ),
-                          Container(
-                            // color: Colors.amber,
-                            width: screenSize.width * 0.4,
-                            height: screenSize.height * 0.07,
-                            margin: const EdgeInsets.fromLTRB(0, 5, 20, 5),
-                            child: TextFormField(
-                              style: TextStyle(color: primaryColor),
-                              cursorColor: primaryColor,
-                              keyboardType: TextInputType.number,
-                              controller: _phoneNumberController,
-                              decoration: InputDecoration(
-                                  hintText: 'Phone Number',
-                                  hintStyle: TextStyle(
-                                      color: blackColor,
-                                      fontSize: screenSize.width * 0.03),
-                                  filled: true,
-                                  fillColor: Colors.grey[200],
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10))),
-                            ),
+                        ),
+
+                        // Container(
+                        //   height: screenSize.height * 0.05,
+                        //   margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        //   child: TextFormField(
+                        //     cursorColor: primaryColor,
+                        //     style: TextStyle(color: primaryColor),
+                        //     controller: _firstnameController,
+                        //     decoration: InputDecoration(
+                        //         hintText: 'First Name',
+                        //         hintStyle: TextStyle(
+                        //             color: blackColor,
+                        //             fontSize: screenSize.width * 0.03),
+                        //         filled: true,
+                        //         fillColor: Colors.grey[200],
+                        //         border: OutlineInputBorder(
+                        //             borderSide: BorderSide.none,
+                        //             borderRadius: BorderRadius.circular(10))),
+                        //   ),
+                        // ),
+                        Container(
+                          padding: const EdgeInsets.all(1.0),
+                          margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Surname is required'.tr;
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: primaryColor),
+                            cursorColor: primaryColor,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _surnameController,
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.all(screenSize.height * 0.01),
+                                hintText: 'Surname'.tr,
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenSize.width * 0.03),
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(5))),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        child: TextFormField(
-                          style: TextStyle(color: primaryColor),
-                          cursorColor: primaryColor,
-                          keyboardType: TextInputType.emailAddress,
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              hintText: 'Email',
-                              hintStyle: TextStyle(
-                                  color: blackColor,
-                                  fontSize: screenSize.width * 0.03),
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10))),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        child: TextFormField(
-                          style: TextStyle(color: primaryColor),
-                          cursorColor: primaryColor,
-                          controller: _passwordController,
-                          obscureText: passwordObscured,
-                          decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                onPressed: (() => setState(() {
-                                      passwordObscured = !passwordObscured;
-                                    })),
-                                icon: Icon(
-                                  passwordObscured
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: primaryColor,
-                                ),
-                              ),
-                              hintText: 'Choose Password',
-                              hintStyle: TextStyle(
-                                  color: blackColor,
-                                  fontSize: screenSize.width * 0.03),
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10))),
+                        // Container(
+                        //   height: screenSize.height * 0.05,
+                        //   margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        //   child: TextFormField(
+                        //     style: TextStyle(color: primaryColor),
+                        //     cursorColor: primaryColor,
+                        //     controller: _surnameController,
+                        //     decoration: InputDecoration(
+                        //         hintText: 'Surname',
+                        //         hintStyle: TextStyle(
+                        //             color: blackColor,
+                        //             fontSize: screenSize.width * 0.03),
+                        //         filled: true,
+                        //         fillColor: Colors.grey[200],
+                        //         border: OutlineInputBorder(
+                        //             borderSide: BorderSide.none,
+                        //             borderRadius: BorderRadius.circular(10))),
+                        //   ),
+                        // ),
+
+                        Container(
+                          padding: const EdgeInsets.all(1.0),
+                          margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email is required'.tr;
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: Colors.blue),
+                            cursorColor: Colors.blue,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.all(screenSize.height * 0.01),
+                                hintText: 'Email'.tr,
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenSize.width * 0.03),
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(5))),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        child: TextFormField(
-                          style: TextStyle(color: primaryColor),
-                          controller: _comfirmpasswordController,
-                          obscureText: passwordObscured,
-                          cursorColor: primaryColor,
-                          decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                onPressed: (() => setState(() {
-                                      passwordObscured = !passwordObscured;
-                                    })),
-                                icon: Icon(
-                                  passwordObscured
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: primaryColor,
+
+                        Container(
+                          padding: const EdgeInsets.all(1.0),
+                          margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password is required'.tr;
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: primaryColor),
+                            cursorColor: primaryColor,
+                            controller: _passwordController,
+                            obscureText: passwordObscured,
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.all(screenSize.height * 0.01),
+                                suffixIcon: IconButton(
+                                  onPressed: (() => setState(() {
+                                        passwordObscured = !passwordObscured;
+                                      })),
+                                  icon: Icon(
+                                      passwordObscured
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: primaryColor),
                                 ),
-                              ),
-                              hintText: 'Comfirm Password',
-                              hintStyle: TextStyle(
-                                  color: blackColor,
-                                  fontSize: screenSize.width * 0.03),
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10))),
+                                hintText: 'Choose Password'.tr,
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenSize.width * 0.03),
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(5))),
+                          ),
                         ),
-                      ),
-                      Container(
-                        // color: Colors.amber,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "By clicking the SignUp button below you agree to Cza's",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => Navigator.of(context).push(
-                                  PageTransition(
-                                    child: TermsAndCondition(),
-                                    type: PageTransitionType.rightToLeft,
+
+                        Container(
+                          padding: const EdgeInsets.all(1.0),
+                          margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Comfirm Password is required'.tr;
+                              }
+                              return null;
+                            },
+                            style: TextStyle(color: primaryColor),
+                            controller: _comfirmpasswordController,
+                            obscureText: passwordObscured,
+                            cursorColor: primaryColor,
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.all(screenSize.height * 0.01),
+                                suffixIcon: IconButton(
+                                  onPressed: (() => setState(() {
+                                        passwordObscured = !passwordObscured;
+                                      })),
+                                  icon: Icon(
+                                    passwordObscured
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: primaryColor,
                                   ),
                                 ),
-                                child: Text(
-                                  " Terms and Service",
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.orange),
-                                ),
-                              ),
-                            ],
+                                hintText: 'Comfirm Password'.tr,
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenSize.width * 0.03),
+                                filled: true,
+                                fillColor: Colors.grey[200],
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(5))),
                           ),
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(20),
+
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          // color: Colors.amber,
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox.adaptive(
+                                      value: isChecked,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isChecked = !isChecked;
+                                        });
+                                      },
+                                    ),
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Click to accept Cza's ".tr,
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      screenSize.height * 0.015,
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () =>
+                                                    Navigator.of(context).push(
+                                                  PageTransition(
+                                                    child: TermsAndCondition(),
+                                                    type: PageTransitionType
+                                                        .rightToLeft,
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "Terms and Service".tr,
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          screenSize.height *
+                                                              0.015,
+                                                      color: Colors.orange),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ]),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: screenSize.height * 0.005,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        // height: 50,
-                        margin: const EdgeInsets.fromLTRB(80, 0, 90, 0),
-                        child: Consumer<SignUPpage2Provider>(
+                        Consumer<SignUPpage2Provider>(
                           builder: (context, SignUpProvider, child) =>
                               GestureDetector(
-                            onTap: () => SignUpProvider.isLoading
-                                ? null
-                                : SignUpProvider.simulateSignUp(
-                                    email: _emailController.text.trim(),
-                                    password: _passwordController.text.trim(),
-                                    comfirmPassword:
-                                        _comfirmpasswordController.text.trim(),
-                                    firstname: _firstnameController.text.trim(),
-                                    othername: _othernameController.text.trim(),
-                                    surname: _surnameController.text.trim(),
-                                    phoneNumber:
-                                        _phoneNumberController.text.trim(),
-                                    btcWallet: _btcWalletController.text.trim(),
-                                    ethereumWallet:
-                                        _ethereumWalletController.text.trim(),
-                                    usdtTrc20Wallet:
-                                        _usdtTrc20WalletController.text.trim(),
-                                    usdtBep20: _usdtBep20Controller.text.trim(),
-                                    usdtPolygon:
-                                        _usdtPolygonController.text.trim(),
-                                    usdtSolana:
-                                        _usdtSolanaController.text.trim(),
-                                    busdBep20: _busdBep20Controller.text.trim(),
-                                    busdPolygon:
-                                        _busdPolygonController.text.trim()),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SignUpProvider.isLoading
-                                      ? Center(
-                                          child: Container(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                // _login();
+                                SignUpProvider.isLoading
+                                    ? null
+                                    : SignUpProvider.simulateSignUp(
+                                        email: _emailController.text.trim(),
+                                        password:
+                                            _passwordController.text.trim(),
+                                        comfirmPassword:
+                                            _comfirmpasswordController.text
+                                                .trim(),
+                                        firstname:
+                                            _firstnameController.text.trim(),
+                                        othername:
+                                            _othernameController.text.trim(),
+                                        surname: _surnameController.text.trim(),
+                                        phoneNumber:
+                                            _phoneNumberController.text.trim(),
+                                        btcWallet:
+                                            _btcWalletController.text.trim(),
+                                        ethereumWallet:
+                                            _ethereumWalletController.text
+                                                .trim(),
+                                        usdtTrc20Wallet:
+                                            _usdtTrc20WalletController.text
+                                                .trim(),
+                                        usdtBep20:
+                                            _usdtBep20Controller.text.trim(),
+                                        usdtPolygon:
+                                            _usdtPolygonController.text.trim(),
+                                        usdtSolana:
+                                            _usdtSolanaController.text.trim(),
+                                        busdBep20:
+                                            _busdBep20Controller.text.trim(),
+                                        busdPolygon:
+                                            _busdPolygonController.text.trim());
+                              }
+                            },
+                            child: Container(
+                              height: screenSize.height * 0.06,
+                              margin: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              // height: 50,
+                              // margin: const EdgeInsets.fromLTRB(80, 0, 90, 0),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SignUpProvider.isLoading
+                                        ? Container(
                                             height: 10,
                                             width: 10,
                                             child: CircularProgressIndicator(
@@ -511,69 +528,42 @@ class _SignUPpage2State extends State<SignUPpage2> {
                                               strokeWidth: 5,
                                               color: Colors.black,
                                             ),
+                                          )
+                                        : Text(
+                                            SignUpProvider.isLoading ? '' : '',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                        )
-                                      : Text(
-                                          SignUpProvider.isLoading ? '' : '',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      SignUpProvider.isLoading
-                                          ? 'Please wait'
-                                          : 'SIGN IN',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        SignUpProvider.isLoading
+                                            ? 'Please wait'.tr
+                                            : 'SIGN UP'.tr,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-
-                              // SignUpProvider.isLoading
-                              //     ? Center(
-                              //         child: Container(
-                              //           color: SignUpProvider.isLoading
-                              //               ? Colors.grey
-                              //               : Colors.deepOrange,
-                              //           height: 10,
-                              //           width: 10,
-                              //           child: CircularProgressIndicator(
-                              //             valueColor: AlwaysStoppedAnimation(
-                              //                 whiteColor),
-                              //             backgroundColor: Colors.black,
-                              //             strokeWidth: 5,
-                              //             color: Colors.black,
-                              //           ),
-                              //         ),
-                              //       )
-                              //     : Text(
-                              //         SignUpProvider.isLoading
-                              //             ? 'Please wait'
-                              //             : 'SIGN UP',
-                              //         style: TextStyle(
-                              //             fontSize: 20,
-                              //             color: Colors.white,
-                              //             fontWeight: FontWeight.bold),
-                              //       ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                    ]),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ]),
+                ),
               ),
             ],
           ),
           Positioned(
-            top: screenSize.height * 0.27,
+            top: screenSize.height * 0.21,
             right: screenSize.width * 0.0585,
             child: Container(
               // color: Colors.amber,
@@ -601,7 +591,7 @@ class _SignUPpage2State extends State<SignUPpage2> {
                             borderRadius: BorderRadius.horizontal(
                                 left: Radius.circular(10))),
                         child: Text(
-                          'SIGN IN',
+                          'SIGN IN'.tr,
                           style: TextStyle(
                             color: Colors.deepOrange,
                             fontWeight: FontWeight.bold,
@@ -616,7 +606,7 @@ class _SignUPpage2State extends State<SignUPpage2> {
                           borderRadius: BorderRadius.horizontal(
                               right: Radius.circular(10))),
                       child: Text(
-                        'SIGN UP',
+                        'SIGN UP'.tr,
                         style: TextStyle(
                           color: Colors.deepOrange,
                           fontWeight: FontWeight.bold,

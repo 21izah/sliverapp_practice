@@ -11,6 +11,7 @@ import 'package:sliverapp_practice/pages/terms_and_condition.dart';
 import 'package:sliverapp_practice/pages/welcomesixth_page.dart';
 import 'package:sliverapp_practice/widgets/hidden_drawer.dart';
 
+import '../riverpod_practice/notification_service.dart';
 import 'create_pin_page.dart';
 import 'loginpage.dart';
 import '../constants/data_constant.dart';
@@ -184,6 +185,8 @@ class _SignUPpageState extends State<SignUPpage> {
   // final firebaseUser = FirebaseAuth.instance.currentUser;
 
   // final docUser = FirebaseFirestore.instance.collection('users').doc();
+
+  static final notifications = NotificationService();
 
   @override
   void dispose() {

@@ -10,7 +10,6 @@ import 'package:sliverapp_practice/pages/forgot_password.dart';
 import 'package:sliverapp_practice/pages/welcomesixth_page.dart';
 import 'package:sliverapp_practice/pages/welcome_page.dart';
 import 'package:sliverapp_practice/widgets/hidden_drawer.dart';
-import 'package:flutter_flushbar/flutter_flushbar.dart';
 
 import 'sign_up_page.dart';
 import '../constants/data_constant.dart';

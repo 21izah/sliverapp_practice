@@ -156,6 +156,7 @@ class _VerificationPageState extends State<VerificationPage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+       backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

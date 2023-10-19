@@ -60,14 +60,17 @@ class _SixthPageState extends State<SixthPage> {
           haptic: true,
           backgroundColor: Theme.of(context).colorScheme.background,
           tabBorder: Border.symmetric(),
-          tabBorderRadius: 5,
+          tabBorderRadius: 10,
           tabBackgroundColor: primaryColor,
+          textStyle: TextStyle(
+            color: Theme.of(context).colorScheme.background,
+          ),
           color: Theme.of(context).colorScheme.background,
           gap: 5,
           tabMargin: EdgeInsets.fromLTRB(5, 5, 5, 20),
           tabs: [
             GButton(
-              icon: UniconsLine.home,
+              icon: UniconsLine.home_alt,
               text: 'Home',
               textColor: Theme.of(context).colorScheme.tertiary,
               iconColor: Theme.of(context).colorScheme.tertiary,

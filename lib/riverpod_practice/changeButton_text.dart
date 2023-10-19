@@ -10,6 +10,7 @@ import '../pages/welcomesixth_page.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/hidden_drawer.dart';
+import 'notification_service.dart';
 
 class ChangeButtonTextProvider with ChangeNotifier {
   // final BuildContext context;
@@ -33,6 +34,7 @@ class ChangeButtonTextProvider with ChangeNotifier {
   // String get _notificationMessage => notificationMessage;
 
   // task functions
+  static final notifications = NotificationService();
 
   Future simulateSignIn({
     required String email,
@@ -45,39 +47,41 @@ class ChangeButtonTextProvider with ChangeNotifier {
 
     await ApiProvider().getEthPrice();
     await ApiProvider().getTeams();
+    await ApiProvider().getCoinMarket();
+    // await ApiProvider().postrequest();
 
-    //
-    void showErrorMessage(String message) {
+    // error widget
+    Future showErrorMessage(String message) async {
       Get.bottomSheet(
         Container(
           height: 400,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // SizedBox(
-            //   height: 20,
-            // ),
-            Container(
-              height: 200,
-              width: double.maxFinite,
-              child: Image.asset(
-                'lib/assets/warning.png',
-                fit: BoxFit.scaleDown,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 200,
+                width: double.maxFinite,
+                child: Image.asset(
+                  'lib/assets/warning.png',
+                  fit: BoxFit.scaleDown,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              message,
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              const SizedBox(
+                height: 10,
               ),
-            ),
-          ]),
+              Text(
+                message,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       );
       Future.delayed(Duration(seconds: 2), () {
@@ -85,7 +89,8 @@ class ChangeButtonTextProvider with ChangeNotifier {
       });
     }
 
-    void showSuccessMessage(String message) {
+    // success message
+    Future showSuccessMessage(String message) async {
       Get.bottomSheet(
         Container(
           height: 400,
@@ -93,9 +98,6 @@ class ChangeButtonTextProvider with ChangeNotifier {
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // SizedBox(
-            //   height: 20,
-            // ),
             Container(
               height: 200,
               width: double.maxFinite,
@@ -127,16 +129,19 @@ class ChangeButtonTextProvider with ChangeNotifier {
     }
 
     try {
-      await FirebaseAuth.instance
+      UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
       User? user = await FirebaseAuth.instance.currentUser;
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('Users')
-          .doc(user!.email)
+          .doc(user!.uid)
           .get();
+      await notifications.requestPermission();
+      await notifications.getToken();
 
       if (snapshot.exists) {
-        final role = snapshot.get('USDT BEP-20 Wallet Address');
+        final role = await snapshot.get('USDT BEP-20 Wallet Address');
 
         if (role == 'admin') {
           Get.off(() => HiddenDrawer());
@@ -150,6 +155,7 @@ class ChangeButtonTextProvider with ChangeNotifier {
           notifyListeners();
         }
       }
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       isLoading = false;
       notifyListeners();

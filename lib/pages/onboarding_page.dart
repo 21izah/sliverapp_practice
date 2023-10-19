@@ -1,15 +1,19 @@
 // ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers, use_build_context_synchronously, depend_on_referenced_packages, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sliverapp_practice/riverpod_practice/dropdown_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-// ignore: unused_import
+
 import 'package:lottie/lottie.dart';
 
 import 'login_selection.dart';
 import '../constants/data_constant.dart';
 import 'sign_up_page copy.dart';
 import 'sign_up_page.dart';
+import '../riverpod_practice/change_onboarding_screen.dart';
 
 class OnboardingPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -22,6 +26,15 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final controller = PageController();
   bool isLastPage = false;
+  final List items = [
+    'Airtel',
+    'MTN',
+    'GLO',
+    '9Mobile',
+  ];
+
+  //
+  dynamic _selectedValue = 'Airtel';
 
   @override
   void dispose() {
@@ -31,6 +44,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    ColorChangeModel colorModel = Provider.of<ColorChangeModel>(context);
+    final dropdownStateProvider = Provider.of<DropdownStateProvider>(context);
+    final selectedValue = dropdownStateProvider.selectedValue;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(bottom: 80),
@@ -39,18 +55,175 @@ class _OnboardingPageState extends State<OnboardingPage> {
           onPageChanged: ((index) {
             setState(() {
               isLastPage = index == 4;
+              colorModel.updateSwipePosition(index.toDouble());
             });
           }),
           children: [
             Container(
-              color: whiteColor,
-              //  child: AspectRatio(
-              //   aspectRatio: 300 / 5,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    Colors.deepOrange.shade500,
+                  ],
+                  stops: const [0.01, 0.9],
+                ),
+                // color: Colors.black,
+              ),
+              // color: colorModel.interpolatedColor,
               child: IntrinsicHeight(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Text(
+                            'Select Language',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton(
+                              underline: Container(),
+                              dropdownColor:
+                                  Theme.of(context).colorScheme.tertiary,
+                              borderRadius: BorderRadius.circular(10),
+                              items: [
+                                DropdownMenuItem(
+                                  value: 'Airtel',
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          radius: 10,
+                                          child: Image.asset(
+                                              'lib/assets/united_kingdom.jpeg'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'EN',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'MTN',
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          radius: 10,
+                                          child: Image.asset(
+                                              'lib/assets/germany_flag.jpeg'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'DE',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: 'GLO',
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          radius: 10,
+                                          child: Image.asset(
+                                              'lib/assets/china_flag.png'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'ZH',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: '9Mobile',
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          radius: 10,
+                                          child: Image.asset(
+                                              'lib/assets/spain_flag.jpeg'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'ES',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                              value: selectedValue,
+                              onChanged: (newvalue) async {
+                                await dropdownStateProvider
+                                    .saveSelectedvalue(newvalue);
+                                dropdownStateProvider
+                                    .toggleDropdowmnScheme(newvalue);
+                              },
+                            ),
+                          ),
+                        ),
+                        // DropDownButton2(),
+                      ],
+                    ),
                     const SizedBox(
                       height: 70,
                     ),
@@ -74,9 +247,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Container(
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
-                          'WELCOME TO CZA EXCHANGE',
+                          'welcome to cza exchange'.tr,
                           style: TextStyle(
-                              color: primaryColor,
+                              color: whiteColor,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
@@ -86,22 +259,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Hi there! Welcome to the Cza Family!',
-                              style: TextStyle(color: blackColor),
-                            ),
-                            Text(
-                              'We are glad  to help you earn and grow your business.',
-                              style: TextStyle(color: blackColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+
                     const SizedBox(
                       height: 70,
                     ),
@@ -111,7 +269,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
 
             Container(
-              color: whiteColor,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    Colors.deepOrange.shade500,
+                  ],
+                  stops: const [0.01, 0.9],
+                ),
+                // color: Colors.black,
+              ),
+              // color: colorModel.interpolatedColor,
               child: IntrinsicHeight(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +289,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     const SizedBox(
                       height: 50,
                     ),
-
                     Container(
                       height: 400,
                       width: 400,
@@ -133,42 +302,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           // ),
                           Lottie.asset('lib/assets/114272-security.json'),
                     ),
-
                     Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Text(
-                        'SECURITY',
+                        'high level security'.tr,
                         style: TextStyle(
-                            color: primaryColor,
+                            color: whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 2,
-                    // ),
-
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 50,
-                        top: 10,
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'As a reputable company your SECURITY ',
-                              style: TextStyle(color: blackColor),
-                            ),
-                            Text(
-                              'is our ulmost priority',
-                              style: TextStyle(color: blackColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
                     const SizedBox(
                       height: 80,
                     ),
@@ -179,7 +322,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
               // child: Image.asset('lib/assets/fast_payment.png'),
             ),
             Container(
-              color: whiteColor,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    Colors.deepOrange.shade600,
+                  ],
+                  stops: const [0.01, 0.9],
+                ),
+                // color: Colors.black,
+              ),
+              // color: colorModel.interpolatedColor,
               //   child: AspectRatio(
               //    aspectRatio: 1 / 1,
               child: IntrinsicHeight(
@@ -200,21 +355,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Container(
                       margin: const EdgeInsets.only(left: 30, bottom: 10),
                       child: Text(
-                        'TRANSACTION SUCCESSFULL',
+                        'seemless transactions'.tr,
                         style: TextStyle(
-                            color: primaryColor,
+                            color: whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        'Get Paid with easy to no stress',
-                        style: TextStyle(
-                          color: blackColor,
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: Text(
+                    //     'Get Paid with easy to no stress',
+                    //     style: TextStyle(
+                    //       color: blackColor,
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 50,
                     ),
@@ -225,7 +380,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
             // child: Image.asset('lib/assets/fast_payment.png'),
             //   ),
             Container(
-              color: whiteColor,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    Colors.deepOrange.shade700,
+                  ],
+                  stops: const [0.01, 0.9],
+                ),
+                // color: Colors.black,
+              ),
+              // color: colorModel.interpolatedColor,
 
               child: IntrinsicHeight(
                 child: Column(
@@ -244,34 +411,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Container(
                       margin: const EdgeInsets.only(left: 30),
                       child: Text(
-                        '24/7 CUSTOMER CARE SERVICE',
+                        '24/7 customer care service'.tr,
                         style: TextStyle(
-                            color: primaryColor,
+                            color: whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 30, top: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'With our 24hours, 7days a week service,',
-                            style: TextStyle(color: blackColor),
-                          ),
-                          Text(
-                            ' we are always accessible to meet your needs',
-                            style: TextStyle(color: blackColor),
-                          ),
-                        ],
-                      ),
-
-                      //  Text(
-                      //   'With our 24hours, 7days a week service, \n we are always accessible to meet your needs ',
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //   ),
-                      // ),
                     ),
                     const SizedBox(
                       height: 70,
@@ -283,7 +428,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
               // child: Image.asset('lib/assets/fast_payment.png'),
             ),
             Container(
-              color: whiteColor,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    colorModel.interpolatedColor,
+                  ],
+                  stops: const [0.01, 0.9],
+                ),
+                // color: Colors.black,
+              ),
+              // color: colorModel.interpolatedColor,
               child: IntrinsicHeight(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -301,18 +458,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           Lottie.asset('lib/assets/92445-crypto-bitcoin.json'),
                     ),
                     Text(
-                      'FAST PAYMENT',
+                      'instant payment'.tr,
                       style: TextStyle(
-                          color: primaryColor,
+                          color: whiteColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      'Receive Payment in no distant time',
-                      style: TextStyle(
-                        color: blackColor,
-                      ),
-                    ),
+                    // Text(
+                    //   '',
+                    //   style: TextStyle(
+                    //     color: blackColor,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 70,
                     ),
@@ -327,13 +484,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
       ),
       bottomSheet: isLastPage
           ? Container(
-              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               decoration: BoxDecoration(
-                color: whiteColor,
+                color: colorModel.interpolatedColor,
               ),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                    minimumSize: const Size.fromHeight(80)),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    side: BorderSide(color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    backgroundColor: colorModel.interpolatedColor,
+                    minimumSize: const Size.fromHeight(60)),
                 onPressed: () async {
                   final pref = await SharedPreferences.getInstance();
                   pref.setBool('showHome', true);
@@ -345,13 +506,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   );
                 },
                 child: Text(
-                  'GET STARTED',
-                  style: TextStyle(color: primaryColor),
+                  'GET STARTED'.tr,
+                  style: TextStyle(
+                    color: whiteColor,
+                  ),
                 ),
               ),
             )
           : Container(
-              color: whiteColor,
+              color: colorModel.interpolatedColor,
               height: 100,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -365,31 +528,36 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             decoration: BoxDecoration(
-                              color: primaryColor,
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              color: colorModel.interpolatedColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Text(
-                              'SKIP',
+                            child: Text(
+                              'SKIP'.tr,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ))),
                     Center(
-                        child: SmoothPageIndicator(
-                      controller: controller,
-                      count: 5,
-                      effect: WormEffect(
-                          dotWidth: 13,
-                          dotHeight: 15,
-                          spacing: 7,
-                          dotColor: blackColor,
-                          activeDotColor: primaryColor),
-                      onDotClicked: (index) {
-                        controller.animateToPage(index,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeIn);
-                      },
-                    )),
+                      child: SmoothPageIndicator(
+                        controller: controller,
+                        count: 5,
+                        effect: WormEffect(
+                            dotWidth: 5,
+                            dotHeight: 5,
+                            spacing: 7,
+                            dotColor: Theme.of(context).colorScheme.tertiary,
+                            activeDotColor:
+                                Theme.of(context).colorScheme.background),
+                        onDotClicked: (index) {
+                          controller.animateToPage(index,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeIn);
+                        },
+                      ),
+                    ),
                     GestureDetector(
                         onTap: () {
                           controller.nextPage(
@@ -400,11 +568,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             decoration: BoxDecoration(
-                              color: primaryColor,
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              color: colorModel.interpolatedColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Text(
-                              'NEXT',
+                            child: Text(
+                              'NEXT'.tr,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
