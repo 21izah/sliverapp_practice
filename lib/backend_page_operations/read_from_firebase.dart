@@ -22,7 +22,7 @@ class ReadFromFirebase extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Text('first name: ${data['First Name']} ${data['Surname']}');
+          return Text('User email: ${data['email']}');
         } else {
           return Text('data');
         }

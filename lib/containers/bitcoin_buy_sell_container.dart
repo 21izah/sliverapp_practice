@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:sliverapp_practice/pages/sell_page.dart';
 import 'package:sliverapp_practice/pages/buy_page.dart';
@@ -35,8 +36,8 @@ class BitcoinBuySellContainer extends StatelessWidget {
           Container(
             margin: const EdgeInsets.fromLTRB(00, 00, 00, 00),
             padding: const EdgeInsets.fromLTRB(20, 2, 20, 20),
-            child: const Text(
-              "Bitcoin Trading",
+            child:  Text(
+              "Bitcoin Trading".tr,
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -79,7 +80,7 @@ class BitcoinBuySellContainer extends StatelessWidget {
                           builder: (context) => BuyPage(),
                         ))
                       },
-                      child: const Text("BUY",
+                      child:  Text("BUY".tr,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
@@ -114,7 +115,7 @@ class BitcoinBuySellContainer extends StatelessWidget {
                           builder: (context) => const SellPage(),
                         ))
                       },
-                      child: const Text("SELL",
+                      child:  Text("SELL".tr,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),

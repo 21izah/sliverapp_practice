@@ -1,6 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FundAccountPage extends StatefulWidget {
   const FundAccountPage({super.key});
@@ -11,6 +12,54 @@ class FundAccountPage extends StatefulWidget {
 
 class _FundAccountPageState extends State<FundAccountPage> {
   bool _buttonDisabled = false;
+  bool _buttonDisabled1 = false;
+  bool _buttonDisabled2 = false;
+  bool _buttonDisabled3 = false;
+
+  Future showMessage(String message) async {
+    Get.bottomSheet(
+      Container(
+        height: 400,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // SizedBox(
+            //   height: 20,
+            // ),
+            Container(
+              height: 200,
+              width: double.maxFinite,
+              child: Image.asset(
+                'lib/assets/success.png',
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    Future.delayed(Duration(seconds: 2), () {
+      Get.back();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -45,7 +94,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       Text(
                         'Fund Wallet',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: screenSize.height * 0.02,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -53,7 +102,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       Text(
                         'Transfer to any of the account number below',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: screenSize.height * 0.015,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -61,7 +110,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       Text(
                         'to fund your wallet',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: screenSize.height * 0.015,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -105,7 +154,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          width: screenSize.width * 0.35,
+                          width: screenSize.width * 0.45,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -122,48 +171,10 @@ class _FundAccountPageState extends State<FundAccountPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: _buttonDisabled
-                                        ? null
-                                        : () async {
-                                            setState(() {
-                                              _buttonDisabled = true;
-                                            });
-
-                                            await FlutterClipboard.copy(
-                                                '9064139951');
-
-                                            AnimatedSnackBar(
-                                              mobileSnackBarPosition:
-                                                  MobileSnackBarPosition.top,
-                                              builder: ((context) {
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  // color: Colors.green,
-                                                  height:
-                                                      screenSize.height * 0.10,
-
-                                                  width: screenSize.width - 70,
-                                                  child: Container(
-                                                    child: Center(
-                                                      child: const Text(
-                                                        'Opay Account Number Copied To clipboard',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ).show(context);
-                                          },
+                                    onTap: () {
+                                      showMessage(
+                                          'Opay Account Number Copied To clipboard');
+                                    },
                                     child: Icon(Icons.copy_rounded)),
                               ]),
                         ),
@@ -214,7 +225,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          width: screenSize.width * 0.35,
+                          width: screenSize.width * 0.45,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -231,48 +242,10 @@ class _FundAccountPageState extends State<FundAccountPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: _buttonDisabled
-                                        ? null
-                                        : () async {
-                                            setState(() {
-                                              _buttonDisabled = true;
-                                            });
-
-                                            await FlutterClipboard.copy(
-                                                '6074930296');
-
-                                            AnimatedSnackBar(
-                                              mobileSnackBarPosition:
-                                                  MobileSnackBarPosition.top,
-                                              builder: ((context) {
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  // color: Colors.green,
-                                                  height:
-                                                      screenSize.height * 0.10,
-
-                                                  width: screenSize.width - 70,
-                                                  child: Container(
-                                                    child: Center(
-                                                      child: const Text(
-                                                        '9 Payment Service Bank Account Number Copied To clipboard',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ).show(context);
-                                          },
+                                    onTap: () {
+                                      showMessage(
+                                          '9 Payment Service Bank Account Number Copied To clipboard');
+                                    },
                                     child: Icon(Icons.copy_rounded)),
                               ]),
                         ),
@@ -324,7 +297,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          width: screenSize.width * 0.35,
+                          width: screenSize.width * 0.45,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -341,48 +314,10 @@ class _FundAccountPageState extends State<FundAccountPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: _buttonDisabled
-                                        ? null
-                                        : () async {
-                                            setState(() {
-                                              _buttonDisabled = true;
-                                            });
-
-                                            await FlutterClipboard.copy(
-                                                '2000571368');
-
-                                            AnimatedSnackBar(
-                                              mobileSnackBarPosition:
-                                                  MobileSnackBarPosition.top,
-                                              builder: ((context) {
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  // color: Colors.green,
-                                                  height:
-                                                      screenSize.height * 0.10,
-
-                                                  width: screenSize.width - 70,
-                                                  child: Container(
-                                                    child: Center(
-                                                      child: const Text(
-                                                        'Kuda Account Number Copied To clipboard',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ).show(context);
-                                          },
+                                    onTap: () {
+                                      showMessage(
+                                          'Kuda Account Number Copied To clipboard');
+                                    },
                                     child: Icon(Icons.copy_rounded)),
                               ]),
                         ),
@@ -433,7 +368,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          width: screenSize.width * 0.35,
+                          width: screenSize.width * 0.45,
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -450,48 +385,10 @@ class _FundAccountPageState extends State<FundAccountPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                    onTap: _buttonDisabled
-                                        ? null
-                                        : () async {
-                                            setState(() {
-                                              _buttonDisabled = true;
-                                            });
-
-                                            await FlutterClipboard.copy(
-                                                '8540692307 ');
-
-                                            AnimatedSnackBar(
-                                              mobileSnackBarPosition:
-                                                  MobileSnackBarPosition.top,
-                                              builder: ((context) {
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  // color: Colors.green,
-                                                  height:
-                                                      screenSize.height * 0.10,
-
-                                                  width: screenSize.width - 70,
-                                                  child: Container(
-                                                    child: Center(
-                                                      child: const Text(
-                                                        'Wema Account Number Copied To clipboard',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ).show(context);
-                                          },
+                                    onTap: () {
+                                      showMessage(
+                                          'Wema Account Number Copied To clipboard');
+                                    },
                                     child: Icon(Icons.copy_rounded)),
                               ]),
                         ),

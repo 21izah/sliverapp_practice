@@ -50,6 +50,7 @@ class _AccountRequirementPageState extends State<AccountRequirementPage> {
         MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         actions: const [
           PopUpMenuButtonWidget(),
         ],
@@ -57,48 +58,49 @@ class _AccountRequirementPageState extends State<AccountRequirementPage> {
         foregroundColor: whiteColor,
       ),
       backgroundColor: primaryColor,
-      body: SingleChildScrollView(
-        child: Stack(children: [
-          Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: screenSize.height * 0.2,
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(70),
-                  ),
-                ),
-                // child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center, children: []),
-              ),
-              Container(
-                height: screenSize.height * 0.8,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10,
-                      // top: 10,
-                      bottom: 10,
+      body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        children: [
+          Stack(children: [
+            Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: screenSize.height * 0.2,
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(70),
                     ),
-                    child: ValueListenableBuilder(
-                      valueListenable: _username.listenable(),
-                      builder: (context, value, child) => LiquidPullToRefresh(
-                        onRefresh: _handleRefresh,
-                        color: Colors.grey[900],
-                        animSpeedFactor: 2,
-                        backgroundColor: Colors.deepOrange,
-                        showChildOpacityTransition: false,
-                        child: SingleChildScrollView(
+                  ),
+                ),
+                Container(
+                  height: screenSize.height * 0.65,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10.0,
+                        right: 10,
+                        // top: 10,
+                        bottom: 10,
+                      ),
+                      child: ValueListenableBuilder(
+                        valueListenable: _username.listenable(),
+                        builder: (context, value, child) => LiquidPullToRefresh(
+                          onRefresh: _handleRefresh,
+                          color: Colors.grey[900],
+                          animSpeedFactor: 2,
+                          backgroundColor: Colors.deepOrange,
+                          showChildOpacityTransition: false,
                           child: Column(
                             children: [
                               const SizedBox(
@@ -214,57 +216,57 @@ class _AccountRequirementPageState extends State<AccountRequirementPage> {
                         ),
                       ),
                     ),
-                  ),
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        height: 50,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              PageTransition(
-                                child: SellInformationPage(),
-                                type: PageTransitionType.rightToLeft,
+                    Row(
+                      // crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigator.of(context).push(
+                              //   PageTransition(
+                              //     child: SellInformationPage(),
+                              //     type: PageTransitionType.rightToLeft,
+                              //   ),
+                              // );
+                            },
+                            child: Center(
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            );
-                          },
-                          child: Center(
-                            child: Text(
-                              'Next',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                    ],
-                  ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
 
-                  // const SizedBox(
-                  //   height: 90,
-                  // ),
-                ]),
-              ),
-            ],
-          ),
-        ]),
+                    // const SizedBox(
+                    //   height: 90,
+                    // ),
+                  ]),
+                ),
+              ],
+            ),
+          ]),
+        ],
       ),
     );
   }

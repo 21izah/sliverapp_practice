@@ -16,6 +16,7 @@ class _SecurityPageState extends State<SecurityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         GestureDetector(
           onTap: () {

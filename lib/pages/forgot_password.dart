@@ -36,22 +36,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             );
           });
     }
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return const Center(
-    //           child: CircularProgressIndicator(
-    //         valueColor: AlwaysStoppedAnimation(Colors.deepOrange),
-    //         backgroundColor: Colors.white,
-    //         strokeWidth: 10,
-    //       ));
-    //     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       // appBar: AppBar(
       //   backgroundColor: Colors.black,
       // ),
@@ -62,10 +52,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 250,
+                height: 100,
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20),
+                margin: const EdgeInsets.only(
+                  left: 20,
+                  bottom: 20,
+                ),
                 child: const Text(
                   'Forgot Password',
                   style: TextStyle(
@@ -75,14 +68,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20),
+                margin: const EdgeInsets.only(
+                  left: 20,
+                  bottom: 10,
+                ),
                 child: const Text(
-                  'Please input your email below',
+                  "Can't remember your password? That's alright. Kindly provide the email you used un signing up",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.deepOrange),
+                      fontWeight: FontWeight.w400, color: Colors.deepOrange),
                 ),
               ),
               const SizedBox(
@@ -102,7 +98,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       filled: true,
                       fillColor: Colors.grey[200],
                       border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                          borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              width: 2),
                           borderRadius: BorderRadius.circular(10))),
                 ),
               ),
@@ -115,7 +113,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
                       color: Colors.deepOrange),
                   height: 50,
                   margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),

@@ -5,16 +5,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sliverapp_practice/backend_page_operations/get_user_name.dart';
 import 'package:sliverapp_practice/containers/coinBuySell.dart';
 import 'package:sliverapp_practice/containers/neuCoinContainer.dart';
 import 'package:sliverapp_practice/pages/customer_care_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sliverapp_practice/pages/terms_and_condition.dart';
 
 import '../constants/data_constant.dart';
 import '../containers/card_details.dart';
 import 'sign_in_homepage.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -35,6 +38,25 @@ class _ProfilePageState extends State<ProfilePage> {
   String phoneNumber = '';
   String email = '';
   String userName = '';
+
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+
+//   1000: Converts seconds to milliseconds (1 second = 1000 milliseconds).
+// 60: Converts minutes to seconds (1 minute = 60 seconds).
+// 60: Converts hours to minutes (1 hour = 60 minutes).
+// 24: Converts days to hours (1 day = 24 hours).
+// 10: The number of days you want to set for the countdown timer.
+// Therefore, 1000 * 60 * 60 * 24 * 10 equals 10 days expressed in milliseconds
+
+  void onEnd() {
+    print('onEnd');
+    Navigator.of(context).push(
+      PageTransition(
+        child: TermsAndCondition(),
+        type: PageTransitionType.rightToLeft,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   height: screenSize.height * 0.8,
                   decoration: BoxDecoration(
-                    color: whiteColor,
+                    color: Theme.of(context).colorScheme.background,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
                       topRight: Radius.circular(40),
@@ -79,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'FirstName',
                               style: TextStyle(
-                                  color: blackColor,
+                                  color: primaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -98,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: FutureBuilder<DocumentSnapshot>(
                               future: FirebaseFirestore.instance
                                   .collection('Users')
-                                  .doc(user!.email)
+                                  .doc(user!.uid)
                                   .get(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -132,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'Surname',
                               style: TextStyle(
-                                  color: blackColor,
+                                  color: primaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -151,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: FutureBuilder<DocumentSnapshot>(
                               future: FirebaseFirestore.instance
                                   .collection('Users')
-                                  .doc(user.email)
+                                  .doc(user.uid)
                                   .get(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -185,7 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'Username',
                               style: TextStyle(
-                                  color: blackColor,
+                                  color: primaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -204,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: FutureBuilder<DocumentSnapshot>(
                               future: FirebaseFirestore.instance
                                   .collection('Users')
-                                  .doc(user.email)
+                                  .doc(user.uid)
                                   .get(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -238,7 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'Phone Number',
                               style: TextStyle(
-                                  color: blackColor,
+                                  color: primaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -257,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: FutureBuilder<DocumentSnapshot>(
                               future: FirebaseFirestore.instance
                                   .collection('Users')
-                                  .doc(user.email)
+                                  .doc(user.uid)
                                   .get(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -279,6 +301,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ],
+                      ),
+                      Center(
+                        child: CountdownTimer(
+                          endWidget: Center(
+                              child: Text('The current time has expired')),
+                          textStyle: TextStyle(
+                            color: Colors.green,
+                          ),
+                          endTime: endTime,
+                          onEnd: onEnd,
+                        ),
                       ),
                     ],
                   ),

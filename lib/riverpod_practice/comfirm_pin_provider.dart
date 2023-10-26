@@ -153,10 +153,10 @@ class ComfirmPinProvider with ChangeNotifier {
       User? user = FirebaseAuth.instance.currentUser;
       await _firestore.collection('UserComfirmPin').doc(user!.email).set(
         {
-          'First Pin': 343434343443434344,
+          'First Pin': 34343434,
           'Second Pin': 34343434,
           'Third Pin': 34343434,
-          'Fourth Pin': 3434343453453453453,
+          'Fourth Pin': 34343434,
         },
         SetOptions(merge: true),
       );

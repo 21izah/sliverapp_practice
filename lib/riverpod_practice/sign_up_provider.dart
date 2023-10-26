@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 
 // import '../constants/data_constant.dart';
 import '../data/api_calls/jsonProvider.dart';
+import '../pages/create_pin_page.dart';
 import '../pages/welcomesixth_page.dart';
 // import '../constants/routers.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'notification_service.dart';
 
 class SignUPpage2Provider with ChangeNotifier {
   // final BuildContext context;
@@ -34,6 +37,7 @@ class SignUPpage2Provider with ChangeNotifier {
   // String get _notificationMessage => notificationMessage;
 
   // task functions
+  static final notifications = NotificationService();
 
   Future simulateSignUp({
     required String email,
@@ -136,7 +140,7 @@ class SignUPpage2Provider with ChangeNotifier {
         // Navigator.pop(context!);
         // PageNavigator(ctx: context).nextPageOnly(page: const SixthPage());
         Get.back();
-        Get.off(() => SixthPage());
+        Get.off(() => CreatePinScreen());
       });
     }
 
@@ -151,7 +155,7 @@ class SignUPpage2Provider with ChangeNotifier {
         UserCredential userCredential = await _auth
             .createUserWithEmailAndPassword(email: email, password: password);
 
-        _firestore.collection('Users').doc(userCredential.user!.email).set(
+        _firestore.collection('Users').doc(userCredential.user!.uid).set(
           {
             'First Name': firstname,
             'Other Name': othername,
@@ -166,13 +170,32 @@ class SignUPpage2Provider with ChangeNotifier {
             'USDT Solana Wallet Address': usdtSolana,
             'BUSD BEP-20 WAllet Address': busdBep20,
             'BUSD Polygon Wallet Address': busdPolygon,
-            'Buy Rate': 750,
-            'Sell Rate': 750,
+            'Uid': userCredential.user!.uid,
           },
           // SetOptions(merge: true),
         );
 
-        Get.off(() => SixthPage());
+        FirebaseFirestore.instance.collection('rates').doc('rates').set({
+          'Buy Rate': 750,
+          'Sell Rate': 750,
+        });
+
+        User? user = FirebaseAuth.instance.currentUser;
+        FirebaseFirestore.instance
+            .collection('transaction')
+            .doc(user!.email)
+            .set(
+          {
+            'successfulTransaction': [],
+            'decliedTransaction': [],
+            'ProcessingTransaction': [],
+          },
+          SetOptions(merge: true),
+        );
+        await notifications.requestPermission();
+        await notifications.getToken();
+
+        Get.off(() => CreatePinScreen());
         isLoading = false;
         notifyListeners();
       } else {
@@ -187,38 +210,5 @@ class SignUPpage2Provider with ChangeNotifier {
       showErrorMessage(e.code);
       notifyListeners();
     }
-
-    // try {
-    //   await FirebaseAuth.instance
-    //       .signInWithEmailAndPassword(email: email, password: password);
-    //   User? user = await FirebaseAuth.instance.currentUser;
-    //   DocumentSnapshot snapshot = await FirebaseFirestore.instance
-    //       .collection('Users')
-    //       .doc(user!.email)
-    //       .get();
-
-    //   if (snapshot.exists) {
-    //     final role = snapshot.get('USDT BEP-20 Wallet Address');
-
-    //     if (role == 'admin') {
-    //       Get.off(() => SixthPage());
-    //       isLoading = false;
-    //       notifyListeners();
-    //     } else {
-    //       isLoading = false;
-    //       notifyListeners();
-
-    //       showSuccessMessage('Success');
-    //       notifyListeners();
-    //     }
-    //   }
-    // } on FirebaseAuthException catch (e) {
-    //   isLoading = false;
-    //   notifyListeners();
-    //   showErrorMessage(e.code);
-    //   notifyListeners();
-    // }
   }
-
-  //
 }
