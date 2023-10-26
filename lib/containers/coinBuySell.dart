@@ -32,28 +32,29 @@ class CoinBuySell extends StatelessWidget {
 
             Container(
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.deepOrange.shade700,
-                      blurRadius: 15,
-                      offset: const Offset(5, 5),
-                      spreadRadius: 1,
-                    ),
-                    BoxShadow(
-                      color: Colors.deepOrange.shade200,
-                      blurRadius: 15,
-                      offset: const Offset(-5, -5),
-                      spreadRadius: 1,
-                    ),
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.black, Colors.deepOrange.shade400],
-                    stops: const [0.1, 0.9],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.deepOrange.shade700,
+                    blurRadius: 15,
+                    offset: const Offset(5, 5),
+                    spreadRadius: 1,
                   ),
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20)),
+                  BoxShadow(
+                    color: Colors.deepOrange.shade200,
+                    blurRadius: 15,
+                    offset: const Offset(-5, -5),
+                    spreadRadius: 1,
+                  ),
+                ],
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.black, Colors.deepOrange.shade400],
+                  stops: const [0.1, 0.9],
+                ),
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Column(children: [
                 Padding(
                   padding: const EdgeInsets.all(25.0),

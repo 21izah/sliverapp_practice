@@ -11,68 +11,29 @@ import 'package:sliverapp_practice/pages/profile_page.dart';
 import '../constants/data_constant.dart';
 import '../containers/darkmode_lightmode.dart';
 import '../containers/option_selection.dart';
+import '../containers/profile_theme_container.dart';
+import '../main.dart';
 import '../riverpod_practice/change_light_dark_mode_provider.dart';
 import '../riverpod_practice/logout_button_text.dart';
 
 import '../riverpod_practice/theme_provider.dart';
+import '../widgets/drop_down_button2 copy.dart';
 import '../widgets/drop_down_button2.dart';
+import 'chat_page.dart';
 import 'security_page.dart';
 import 'terms_and_condition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share_plus/share_plus.dart';
 
 final bucketGlobsl = PageStorageBucket();
 
-class ProfilePage1 extends StatefulWidget {
+class ProfilePage1 extends StatelessWidget {
   ProfilePage1({super.key});
 
-  @override
-  State<ProfilePage1> createState() => _ProfilePage1State();
-}
-
-class _ProfilePage1State extends State<ProfilePage1> {
-  // late ChangeLightDarkMode appState;
-//   final _mybox = Hive.box('isDarkModeOn');
-
-//   @override
-//   void initState()  {
-//     // final prefs = await SharedPreferences.getInstance();
-//     // prefs.getBool('key');
-
-//     // print(prefs.getBool('key'));
-//     // Hive.openBox('isDarkModeOn');
-//     // _mybox.get('isDarkModeOn');
-// //     if (_mybox.get('isDarkModeOn') == null) {
-// //       // deflaut toggle posiion
-// //       // toggleColorScheme(to);
-// //     } else {
-// // // load stored postion
-// //       // loadSavedState();
-// //     }
-
-//     // update the new toggle position
-//     super.initState();
-//     // appState = Provider.of<ChangeLightDarkMode>(context, listen: false);
-//     // appState.loadSavedState();
-//   }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   appState.saveState();
-  //   super.dispose();
-  // }
-
-  bool islightmodeEnabled = true;
-
-  void toggleColorScheme(bool value) {
-    setState(() {
-      islightmodeEnabled = value;
-    });
-  }
-
+  // bool islightmodeEnabled = true;
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    // final themeProvider = Provider.of<ThemeProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -91,51 +52,76 @@ class _ProfilePage1State extends State<ProfilePage1> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: CircleAvatar(
-                      child: Icon(
-                        Icons.person_4_rounded,
-                        color: Colors.white,
-                      ),
-                      radius: 25,
-                      backgroundColor: primaryColor,
-                    ),
-                  ),
-                  Column(
+                  Row(
                     children: [
-                      Text(
-                        'Investor',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: CircleAvatar(
+                          child: Icon(
+                            Icons.person_4_rounded,
+                            color: Colors.white,
+                          ),
+                          radius: 25,
+                          backgroundColor: primaryColor,
                         ),
                       ),
-                      FutureBuilder<DocumentSnapshot>(
-                        future: FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(user!.email)
-                            .get(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            Map<String, dynamic> data =
-                                snapshot.data!.data() as Map<String, dynamic>;
-                            return Text(
-                              '${data['First Name']}',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: primaryColor,
-                              ),
-                            );
-                          } else {
-                            return Text('loading');
-                          }
-                        },
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Investor',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          FutureBuilder<DocumentSnapshot>(
+                            future: FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(user!.uid)
+                                .get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                Map<String, dynamic> data = snapshot.data!
+                                    .data() as Map<String, dynamic>;
+                                return Text(
+                                  '${data['First Name']}',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: primaryColor,
+                                  ),
+                                );
+                              } else {
+                                return Text('loading');
+                              }
+                            },
+                          ),
+                        ],
                       ),
                     ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // navigatorKey.currentState?.pushNamed(
+                      //   '/notification_screen',
+                      // );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CircleAvatar(
+                        child: Icon(
+                          Icons.notifications_active_rounded,
+                          color: Colors.white,
+                        ),
+                        radius: 25,
+                        backgroundColor: primaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -167,31 +153,40 @@ class _ProfilePage1State extends State<ProfilePage1> {
                 ),
                 child: DropDownButton2(),
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20,
+                  bottom: 5,
+                  top: 5,
+                ),
+                child: DropDownButton3(),
+              ),
             ],
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                PageTransition(
-                  child: SecurityPage(),
-                  type: PageTransitionType.rightToLeft,
-                ),
-              );
-            },
-            child: OptionSelection(
-              textHeaderColor: Colors.black,
-              iconImage: Icon(
-                Icons.security_rounded,
-                color: Colors.amber[700],
-              ),
-              TextHeader: 'Secuity',
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //       PageTransition(
+          //         child: SecurityPage(),
+          //         type: PageTransitionType.rightToLeft,
+          //       ),
+          //     );
+          //   },
+          //   child: OptionSelection(
+          //     textHeaderColor: Colors.black,
+          //     iconImage: Icon(
+          //       Icons.security_rounded,
+          //       color: Colors.amber[700],
+          //     ),
+          //     TextHeader: 'Secuity',
+          //   ),
+          // ),
           Consumer<ChangeLightDarkMode>(
             builder: (context, su, _) => PageStorage(
               bucket: bucketGlobsl,
               child: LightModeSwitch(
-                textHeaderColor: Colors.black,
+                textHeaderColor: Theme.of(context).colorScheme.tertiary,
                 iconImage: Icon(
                   Icons.color_lens_outlined,
                   color: Colors.amber[700],
@@ -200,16 +195,6 @@ class _ProfilePage1State extends State<ProfilePage1> {
               ),
             ),
           ),
-          // Consumer<ThemeProvider>(
-          //   builder: (context, su, _) => LightModeSwitch(
-          //     textHeaderColor: Colors.black,
-          //     iconImage: Icon(
-          //       Icons.color_lens_outlined,
-          //       color: Colors.amber[700],
-          //     ),
-          //     TextHeader: su.isDarkmodeEnabled ? 'Dark Mode' : 'Light Mode',
-          //   ),
-          // ),
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(
@@ -220,7 +205,7 @@ class _ProfilePage1State extends State<ProfilePage1> {
               );
             },
             child: OptionSelection(
-              textHeaderColor: Colors.black,
+              textHeaderColor: Theme.of(context).colorScheme.tertiary,
               iconImage: Icon(
                 Icons.collections_bookmark_rounded,
                 color: Colors.amber[700],
@@ -228,28 +213,19 @@ class _ProfilePage1State extends State<ProfilePage1> {
               TextHeader: 'Terms of Service',
             ),
           ),
+
+          const ThemeContainer(),
+
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                PageTransition(
-                  child: CustomerCarePage(),
-                  type: PageTransitionType.rightToLeft,
-                ),
-              );
+            onTap: () async {
+              // subject:
+              // 'Look what I made!';
+              final urlPreview = 'https://youtu.be/CNUBhb_cM6E';
+              await Share.share('Download the app\n\n$urlPreview',
+                  subject: 'look in');
             },
             child: OptionSelection(
-              textHeaderColor: Colors.black,
-              iconImage: Icon(
-                Icons.messenger,
-                color: Colors.amber[700],
-              ),
-              TextHeader: 'Customer Support',
-            ),
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: OptionSelection(
-              textHeaderColor: Colors.black,
+              textHeaderColor: Theme.of(context).colorScheme.tertiary,
               iconImage: Icon(
                 Icons.share_rounded,
                 color: Colors.amber[700],
@@ -268,6 +244,9 @@ class _ProfilePage1State extends State<ProfilePage1> {
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
                         decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
                           color: log.isLoading ? Colors.grey : Colors.redAccent,
                           borderRadius: BorderRadius.circular(10),
                         ),

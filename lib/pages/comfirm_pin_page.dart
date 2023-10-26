@@ -196,6 +196,7 @@ class _ComfirmPinPageState extends State<ComfirmPinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

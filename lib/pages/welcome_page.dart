@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sliverapp_practice/containers/card_details.dart';
@@ -14,14 +15,25 @@ import '../containers/ethNeuContainer.dart';
 
 import '../containers/otherNeucaintainer.dart';
 import '../containers/usdt_container.dart';
+import '../riverpod_practice/accuont_balance.dart';
 import '../riverpod_practice/balance_obscure_provider.dart';
+import '../riverpod_practice/changeButton_text.dart';
 import '../riverpod_practice/change_light_dark_mode_provider.dart';
+import 'buy_page2 usdt.dart';
 import 'buy_page2.dart';
 
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/data_constant.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:async';
+
+import 'buy_page2_ethereum.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:sliverapp_practice/model/coinModel.dart';
+
+import 'complex_json_practice.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -31,8 +43,10 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  final _username = Hive.box('username');
   final _cardController = PageController(initialPage: 0);
   Timer? _timer;
+  final ChangeButtonTextProvider _changeButtonText = ChangeButtonTextProvider();
 
   @override
   void initState() {
@@ -41,6 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
     super.initState();
     startNavigationDelay();
+    // getCoinMarket();
   }
 
   @override
@@ -55,10 +70,10 @@ class _WelcomePageState extends State<WelcomePage> {
       final nextPage = _cardController.page!.toInt() + 1;
       if (nextPage < 3) {
         _cardController.animateToPage(nextPage,
-            duration: Duration(seconds: 3), curve: Curves.linear);
+            duration: Duration(seconds: 3), curve: Curves.ease);
       } else {
         _cardController.animateToPage(0,
-            duration: Duration(seconds: 1), curve: Curves.linear);
+            duration: Duration(seconds: 1), curve: Curves.ease);
       }
       // _cardController.nextPage(
       //     duration: Duration(milliseconds: 300), curve: Curves.easeIn);
@@ -83,10 +98,6 @@ class _WelcomePageState extends State<WelcomePage> {
                 height: screenSize.height * 0.40,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
-                  // borderRadius: BorderRadius.only(
-                  //   bottomRight: Radius.circular(20),
-                  //   bottomLeft: Radius.circular(20),
-                  // ),
                 ),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -107,7 +118,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Hello,',
+                                    'Hello'.tr,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -130,7 +141,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 child: FutureBuilder<DocumentSnapshot>(
                                   future: FirebaseFirestore.instance
                                       .collection('Users')
-                                      .doc(user!.email)
+                                      .doc(user!.uid)
                                       .get(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -155,22 +166,25 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ],
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20))),
-                        height: 210,
-                        child: CardDetails(
-                          cardColor: primaryColor,
-                          cardBalance: 5000000,
-                          cardNumber: 2355,
-                          cardExpiryMonth: 23,
-                          cardExpiryYear: 20,
-                          cardImage: Lottie.asset('lib/assets/bitcoin.json',
-                              fit: BoxFit.fill),
-                        ),
-                      ).animate().slideX(duration: 500.ms),
+                      Consumer<AccountBalance>(
+                        builder: (context, acct, child) => Container(
+                          decoration: const BoxDecoration(
+                              // color: Colors.amber,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20))),
+                          // height: screenSize.height * 0.23,
+                          child: CardDetails(
+                            cardColor: primaryColor,
+                            cardBalance: acct.accountBalance,
+                            cardNumber: 2355,
+                            cardExpiryMonth: 23,
+                            cardExpiryYear: 20,
+                            cardImage: Lottie.asset('lib/assets/bitcoin.json',
+                                fit: BoxFit.fill),
+                          ),
+                        ).animate().slideX(duration: 500.ms),
+                      ),
                     ]),
               ),
             ],
@@ -182,7 +196,7 @@ class _WelcomePageState extends State<WelcomePage> {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.background,
-                //  borderRadius: BorderRadius.circular(10),
+                // borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
               height: screenSize.height * 0.8,
@@ -199,7 +213,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         GestureDetector(
                           onTap: () => Navigator.of(context).push(
                             PageTransition(
-                              child: BuyPage2(),
+                              child: UsdtBuyPage2(),
                               type: PageTransitionType.rightToLeft,
                             ),
                           ),
@@ -225,7 +239,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         GestureDetector(
                           onTap: () => Navigator.of(context).push(
                             PageTransition(
-                              child: BuyPage2(),
+                              child: ComplexJsonData(),
                               type: PageTransitionType.rightToLeft,
                             ),
                           ),
@@ -242,108 +256,17 @@ class _WelcomePageState extends State<WelcomePage> {
                     controller: _cardController,
                     count: 3,
                     effect: WormEffect(
-                      dotColor: Colors.black,
+                      dotColor: Theme.of(context).colorScheme.tertiary,
                       activeDotColor: Colors.deepOrange,
                       offset: 3,
                       radius: 4,
                       dotHeight: 4,
                       dotWidth: 4,
                     ),
-                    // effect: const ExpandingDotsEffect(
-                    //     activeDotColor: Colors.deepOrange, dotHeight: 10),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(
-                  //         left: 20.0,
-                  //         right: 5,
-                  //         bottom: 20,
-                  //       ),
-                  //       child: Container(
-                  //         child: Column(children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CircleAvatar(
-                  //                 radius: 30,
-                  //                 child: Image.asset('lib/assets/usdt_.png')),
-                  //           ),
-                  //           Text(
-                  //             'USDT',
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //           )
-                  //         ]),
-                  //         decoration: BoxDecoration(
-                  //             color: Colors.green,
-                  //             borderRadius: BorderRadius.circular(10)),
-                  //         height: 105,
-                  //         width: 105,
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(
-                  //         left: 0.0,
-                  //         right: 5,
-                  //         bottom: 20,
-                  //       ),
-                  //       child: Container(
-                  //         child: Column(children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CircleAvatar(
-                  //                 radius: 30,
-                  //                 child: Image.asset('lib/assets/busd1_.png')),
-                  //           ),
-                  //           Text(
-                  //             'BUSD',
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //           ),
-                  //         ]),
-                  //         height: 105,
-                  //         width: 105,
-                  //         decoration: BoxDecoration(
-                  //             color: Colors.deepOrange,
-                  //             borderRadius: BorderRadius.circular(10)),
-                  //       ),
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(
-                  //         left: 0.0,
-                  //         right: 20,
-                  //         bottom: 20,
-                  //       ),
-                  //       child: Container(
-                  //         child: Column(children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CircleAvatar(
-                  //                 radius: 30,
-                  //                 child: Image.asset('lib/assets/monero.png')),
-                  //           ),
-                  //           Text(
-                  //             'Others',
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //             ),
-                  //           )
-                  //         ]),
-                  //         height: 105,
-                  //         width: 105,
-                  //         decoration: BoxDecoration(
-                  //             color: Colors.red,
-                  //             borderRadius: BorderRadius.circular(10)),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   Column(children: [
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
@@ -360,7 +283,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         PageTransition(
-                          child: BuyPage2(),
+                          child: EthereumBuyPage2(),
                           type: PageTransitionType.rightToLeft,
                         ),
                       ),
@@ -377,267 +300,43 @@ class _WelcomePageState extends State<WelcomePage> {
               ]),
             ),
           ),
-          // Positioned(
-          //   left: 0.8 * screenSize.width,
-          //   top: 0.85 * screenSize.height,
-          //   // bottom: 0.2 * screenSize.height,
-          //   child: Padding(
-          //     padding: const EdgeInsets.fromLTRB(0, 10, 30, 10),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.end,
-          //       children: [
-          //         FloatingActionButton(
-          //           heroTag: 'customer page button',
-          //           backgroundColor: primaryColor,
-          //           foregroundColor: Colors.black,
-          //           splashColor: Colors.amber,
-          //           child: const Icon(Icons.message),
-          //           onPressed: () {
-          //             Navigator.of(context).push(
-          //               PageTransition(
-          //                 child: CustomerCarePage(),
-          //                 type: PageTransitionType.rightToLeft,
-          //               ),
-          //             );
-          //           },
-          //         ),
-          //       ]
-          //           .animate(interval: NumDurationExtensions(6).seconds)
-          //           .slideX()
-          //           .then()
-          //           .shake(),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
   }
+
+  // List? coinMarket = [];
+  // var coinMarketList;
+
+  // Future<List<CoinModel>?> getCoinMarket() async {
+  //   const url =
+  //       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true';
+  //   var response = await http.get(Uri.parse(url), headers: {
+  //     "content-Type": "application/json",
+  //     "Accept": "application/json",
+  //   });
+  //   print(response.body);
+
+  //   // var jsonData = convert.jsonDecode(response.body);
+  //   // print(jsonData);
+  //   // var jsonbit1 = jsonData['bitcoin']['usd'];
+  //   // await jsonbit1;
+
+  //   // await _username.put(20, jsonData['bitcoin']['usd']);
+  //   // print(jsonData['bitcoin']['usd']);
+  //   // print(_username.get(20).toString());
+
+  //   if (response.statusCode == 200) {
+  //     var x = response.body;
+  //     // return jsonData;
+  //     coinMarketList = coinModelFromJson(x);
+  //     // print(coinMarketList.name);
+  //     setState(() {
+  //       coinMarket = coinMarketList;
+  //     });
+  //     // CoinModel.fromJson(jsonData).name;
+  //   } else {
+  //     throw Exception('Failed to load Api Data');
+  //   }
+  // }
 }
-
-
-// Container(
-//     margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-//     child: const Vbitcoin()),
-// Container(
-//   margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-//   child: const VEthereum(),
-// ),
-// Container(
-//     margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-//     child: const VUsdtBep20()),
-// Container(
-//     margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-//     child: const VUsdtTrc20()),
-// Container(
-//     margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-//     child: const VBusdBap20()),
-
-// fufhweuf
- // GestureDetector(
-                //   onTap: () {
-                //     Navigator.of(context).push(MaterialPageRoute(
-                //       builder: (context) => const BitcoinBuyPage(),
-                //     ));
-                //   },
-                //   child: CoinBuySell(
-                //       coinName: 'Bitcoin',
-                //       gradientColor: const Color.fromARGB(255, 225, 122, 4),
-                //       coinImage: Image.asset('lib/assets/bitcoin_cash.png')),
-                // ),
-                // CoinBuySell(
-                //     coinName: 'Ethereum',
-                //     gradientColor: const Color.fromARGB(221, 41, 37, 37),
-                //     coinImage: Image.asset('lib/assets/Ethereum_.png')),
-                // CoinBuySell(
-                //     coinName: 'USDT',
-                //     gradientColor: const Color.fromARGB(255, 20, 141, 63),
-                //     coinImage: Image.asset('lib/assets/usdt_.png')),
-                // CoinBuySell(
-                //     coinName: 'BUSD',
-                //     gradientColor: Colors.yellow,
-                //     coinImage: Image.asset('lib/assets/busd1_.png')),
-                // CoinBuySell(
-                //     coinName: 'Other Crypto',
-                //     gradientColor: Colors.deepPurple,
-                //     coinImage: Image.asset('lib/assets/dash.png')),
-                // const SizedBox(
-                //   height: 50,
-                // ),
-                //
-                // ffgiefgiww
-                 //  Column(
-          // children: [
-          //   SizedBox(
-          //     height: 300,
-          //     // color: Colors.amber,
-          //     child: PageView(
-          //       controller: _cardController,
-          //       scrollDirection: Axis.horizontal,
-          //       children: [
-          //         const CardDetails(
-          //           cardColor: Colors.deepOrange,
-          //           cardBalance: 455656.00,
-          //           cardNumber: 2355,
-          //           cardExpiryMonth: 23,
-          //           cardExpiryYear: 20,
-          //         ),
-          //         const CardDetails(
-          //           cardColor: Colors.green,
-          //           cardBalance: 455656.00,
-          //           cardNumber: 2355,
-          //           cardExpiryMonth: 23,
-          //           cardExpiryYear: 20,
-          //         ),
-          //         const CardDetails(
-          //           cardColor: Colors.blue,
-          //           cardBalance: 455656.00,
-          //           cardNumber: 2355,
-          //           cardExpiryMonth: 23,
-          //           cardExpiryYear: 20,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   const SizedBox(
-          //     height: 9,
-          //   ),
-            // SmoothPageIndicator(
-            //   controller: _cardController,
-            //   count: 3,
-            //   effect: const ExpandingDotsEffect(
-            //       activeDotColor: Colors.deepOrange, dotHeight: 10),
-            // ),
-            // const SizedBox(
-            //   height: 15,
-            // ),
-        //     SizedBox(
-        //       height: 150,
-        //       child: ListView(
-        //         scrollDirection: Axis.horizontal,
-        //         children: [
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/bitcoin_cash.png'),
-        //               coinName: 'Bitcoin Cash'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/litcoin_.png'),
-        //               coinName: 'Litcoin'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/cardano.png'),
-        //               coinName: 'Cardano'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/dash.png'),
-        //               coinName: 'Dash'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/monero.png'),
-        //               coinName: 'Monero'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/digibite.png'),
-        //               coinName: 'Digibite'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/nano_.png'),
-        //               coinName: 'Nano'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/dogecoin.png'),
-        //               coinName: 'Dogecoin'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/tron_.png'),
-        //               coinName: 'Tron'),
-        //           CoinContainer(
-        //               coinImage: Image.asset('lib/assets/xrp.png'),
-        //               coinName: 'Xrp'),
-        //         ],
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: ListView(
-        //         children: [
-        //           CoinBuySell(
-        //               coinName: 'Bitcoin Cash',
-        //               gradientColor: Colors.deepOrange,
-        //               coinImage: Image.asset('lib/assets/bitcoin_cash.png')),
-        //           CoinBuySell(
-        //               coinName: 'Litcoin',
-        //               gradientColor: const Color.fromARGB(255, 112, 107, 106),
-        //               coinImage: Image.asset('lib/assets/litcoin_.png')),
-        //           CoinBuySell(
-        //               coinName: 'Cardano',
-        //               gradientColor: Colors.blue,
-        //               coinImage: Image.asset('lib/assets/cardano.png')),
-        //           CoinBuySell(
-        //               coinName: 'Dash',
-        //               gradientColor: Colors.deepPurple,
-        //               coinImage: Image.asset('lib/assets/dash.png')),
-        //           CoinBuySell(
-        //               coinName: 'Monero',
-        //               gradientColor: Colors.deepOrange,
-        //               coinImage: Image.asset('lib/assets/monero.png')),
-        //           CoinBuySell(
-        //               coinName: 'Digibite',
-        //               gradientColor: Colors.blueAccent,
-        //               coinImage: Image.asset('lib/assets/digibite.png')),
-        //           CoinBuySell(
-        //               coinName: 'Nano',
-        //               gradientColor: Colors.blue,
-        //               coinImage: Image.asset('lib/assets/nano_.png')),
-        //           CoinBuySell(
-        //               coinName: 'DogeCoin',
-        //               gradientColor: Colors.deepPurple,
-        //               coinImage: Image.asset('lib/assets/dogecoin.png')),
-        //           CoinBuySell(
-        //               coinName: 'Tron',
-        //               gradientColor: Colors.red,
-        //               coinImage: Image.asset('lib/assets/tron_.png')),
-        //           CoinBuySell(
-        //               coinName: 'XRP',
-        //               gradientColor: Colors.blue,
-        //               coinImage: Image.asset('lib/assets/xrp.png')),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // rwuwrohg
-           // color Colors.amber,
-              // child: PageView(
-              //   controller: _cardController,
-              //   scrollDirection: Axis.horizontal,
-              //   children: [
-              //     CardDetails(
-              //       cardColor: Colors.deepOrange,
-              //       cardBalance: 455656.00,
-              //       cardNumber: 2355,
-              //       cardExpiryMonth: 23,
-              //       cardExpiryYear: 20,
-              //       cardImage: Image.asset('lib/assets/bitcoin_cash.png'),
-              //     ),
-              //     CardDetails(
-              //       cardColor: const Color.fromARGB(255, 112, 107, 106),
-              //       cardBalance: 455656.00,
-              //       cardNumber: 2355,
-              //       cardExpiryMonth: 23,
-              //       cardExpiryYear: 20,
-              //       cardImage: Image.asset('lib/assets/litcoin_.png'),
-              //     ),
-              //     CardDetails(
-              //       cardColor: Colors.blue,
-              //       cardBalance: 455656.00,
-              //       cardNumber: 2355,
-              //       cardExpiryMonth: 23,
-              //       cardExpiryYear: 20,
-              //       cardImage: Image.asset('lib/assets/cardano.png'),
-              //     ),
-              //   ],
-              // ),
-              // weyfgw
-               // const SizedBox(
-            //   height: 20,
-            // ),
-            // SmoothPageIndicator(
-            //   controller: _cardController,
-            //   count: 3,
-            //   effect: const ExpandingDotsEffect(
-            //       dotColor: Colors.white,
-            //       activeDotColor: Colors.deepOrange,
-            //       dotHeight: 10),
-            // ),

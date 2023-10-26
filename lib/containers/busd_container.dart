@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:get/get.dart';
 import '../constants/data_constant.dart';
 
 class BusdContainer extends StatelessWidget {
@@ -24,7 +25,11 @@ class BusdContainer extends StatelessWidget {
         height: 100,
         width: 400,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.amber),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.amber),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -40,7 +45,7 @@ class BusdContainer extends StatelessWidget {
                         animatedTexts: [
                           TypewriterAnimatedText(
                             speed: const Duration(milliseconds: 50),
-                            '$coinName Trading',
+                            '$coinName Trading'.tr,
                             textStyle: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -52,7 +57,7 @@ class BusdContainer extends StatelessWidget {
                         animatedTexts: [
                           TypewriterAnimatedText(
                             speed: const Duration(milliseconds: 50),
-                            'Buy & Sell $coinName',
+                            'Buy & Sell $coinName'.tr,
                             textStyle: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,

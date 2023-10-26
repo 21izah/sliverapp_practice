@@ -1,13 +1,17 @@
 // ignore_for_file: unused_field, deprecated_member_use, avoid_unnecessary_containers
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/data_constant.dart';
+import '../containers/support_container.dart';
+import 'chat_page.dart';
 import 'customer_care_page.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({Key? key}) : super(key: key);
@@ -23,44 +27,46 @@ class HelpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButton: SpeedDial(
+        spacing: 10,
+        spaceBetweenChildren: 10,
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.blue,
+        children: [
+          SpeedDialChild(
+              backgroundColor: Colors.amber,
+              child: Icon(Icons.abc),
+              label: 'Instagram'),
+          SpeedDialChild(
+              backgroundColor: Colors.pink,
+              child: Icon(Icons.access_alarms),
+              label: 'Tik-Tok'),
+          SpeedDialChild(
+              backgroundColor: Colors.brown,
+              child: Icon(Icons.abc),
+              label: 'Whatsapp'),
+          SpeedDialChild(
+              backgroundColor: Colors.green,
+              child: Icon(Icons.abc),
+              label: 'Facebook'),
+        ],
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.deepOrange,
-      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 50,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text(
-          //       'Support',
-          //       style: TextStyle(
-          //           fontSize: 20,
-          //           fontWeight: FontWeight.bold,
-          //           color: Colors.deepOrange),
-          //     ),
-          //   ],
-          // ),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.asset('lib/assets/24hrs_customer_care_and_transaction.png'),
-
-            // Text(
-            //   'Always here to support you',
-            //   style: TextStyle(
-            //     fontSize: 20,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.white,
-            //   ),
-            // ),
             const SizedBox(
               height: 10,
             ),
-
             Container(
               margin: EdgeInsets.only(
                 left: 20,
@@ -147,9 +153,10 @@ class HelpPage extends StatelessWidget {
                 Text(
                   'Follow us on Socials',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: whiteColor,
-                      fontSize: 20),
+                    fontWeight: FontWeight.bold,
+                    color: whiteColor,
+                    fontSize: screenSize.height * 0.02,
+                  ),
                 ),
               ]),
               height: 100,
@@ -157,171 +164,87 @@ class HelpPage extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20), color: primaryColor),
             ),
-
             const SizedBox(
               height: 10,
             ),
+            const SupportContainer(),
 
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20,
-                top: 10,
-                bottom: 10,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: CustomerCarePage(),
-                      type: PageTransitionType.rightToLeft,
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FloatingActionButton(
+                    child: SpeedDial(
+                      direction: SpeedDialDirection.up,
+                      foregroundColor: Colors.white,
+                      spacing: 0,
+                      spaceBetweenChildren: 0,
+                      animatedIcon: AnimatedIcons.menu_close,
+                      backgroundColor: Colors.deepOrange,
+                      children: [
+                        SpeedDialChild(
+                            onTap: () async {
+                              if (await canLaunch(
+                                  "https://www.instagram.com/cza_exchange/")) {
+                                await launch(
+                                  "https://www.instagram.com/cza_exchange/",
+                                  forceSafariVC: false,
+                                  forceWebView: false,
+                                  enableJavaScript: true,
+                                );
+                              }
+                            },
+                            backgroundColor: Colors.transparent,
+                            child: Lottie.asset(
+                                'lib/assets/instagram-logo-effect.json'),
+                            label: 'Instagram'),
+                        SpeedDialChild(
+                            onTap: () async {
+                              if (await canLaunch(
+                                  "http://tiktok.com/@cza_xchange")) {
+                                await launch(
+                                  "http://tiktok.com/@cza_xchange",
+                                  forceSafariVC: false,
+                                  forceWebView: false,
+                                  enableJavaScript: true,
+                                );
+                              }
+                            },
+                            backgroundColor: Colors.transparent,
+                            child: Lottie.asset('lib/assets/tiktok-icon.json'),
+                            label: 'Tik-Tok'),
+                        SpeedDialChild(
+                            onTap: () async {
+                              if (await canLaunch(
+                                  "https://wa.me/message/HYPZLULQV6N3E1")) {
+                                await launch(
+                                  "https://wa.me/message/HYPZLULQV6N3E1",
+                                  forceSafariVC: false,
+                                  forceWebView: false,
+                                  enableJavaScript: true,
+                                );
+                              }
+                            },
+                            backgroundColor: Colors.transparent,
+                            child: Lottie.asset(
+                                'lib/assets/whatsapp-button-call-attention-and-pause.json'),
+                            label: 'Whatsapp'),
+                        SpeedDialChild(
+                            backgroundColor: Colors.transparent,
+                            child: Lottie.asset(
+                                'lib/assets/facebook-logo-effect.json'),
+                            label: 'Facebook'),
+                      ],
                     ),
-                  );
-                },
-                child: Container(
-                  height: 100,
-                  width: 400,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: primaryColor),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                AnimatedTextKit(
-                                  animatedTexts: [
-                                    TypewriterAnimatedText(
-                                      speed: const Duration(milliseconds: 50),
-                                      'Live Chat Support',
-                                      textStyle: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: whiteColor),
-                                    ),
-                                  ],
-                                ),
-                                AnimatedTextKit(
-                                  animatedTexts: [
-                                    TypewriterAnimatedText(
-                                      speed: const Duration(milliseconds: 50),
-                                      'We are always online to help you out',
-                                      textStyle: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: whiteColor),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.orange,
-                              child: Icon(
-                                Icons.messenger,
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+                    onPressed: () {},
                   ),
                 ),
-              ),
+              ],
             ),
-            // GestureDetector(
-            //   onTap: () async {
-            //     if (await canLaunch("https://wa.me/message/HYPZLULQV6N3E1")) {
-            //       await launch(
-            //         "https://wa.me/message/HYPZLULQV6N3E1",
-            //         forceSafariVC: false,
-            //         forceWebView: false,
-            //         enableJavaScript: true,
-            //       );
-            //     }
-            //   },
-            //   child: Container(
-            //     width: 150,
-            //     padding: const EdgeInsets.all(10),
-            //     decoration: BoxDecoration(
-            //         border: Border.all(color: Colors.white.withOpacity(0.9)),
-            //         borderRadius: BorderRadius.circular(20),
-            //         gradient: const LinearGradient(
-            //             begin: Alignment.topLeft,
-            //             end: Alignment.center,
-            //             colors: [Colors.white, Colors.green])),
-            //     child: Row(
-            //       children: [
-            //         CircleAvatar(
-            //           backgroundColor: Colors.white,
-            //           child: Image.asset('lib/assets/whatsapp-logo.png'),
-            //         ),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         const Text(
-            //           "Whatsapp",
-            //           style: TextStyle(
-            //               color: Colors.white, fontWeight: FontWeight.bold),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(
-              height: 20,
-            ),
-            //
-            //"https://t.me/Michael_izah"
-            // GestureDetector(
-            //   onTap: () async {
-            //     if (await canLaunch("https://t.me/Michael_izah")) {
-            //       await launch(
-            //         "https://t.me/Michael_izah",
-            //         forceSafariVC: false,
-            //         forceWebView: false,
-            //         enableJavaScript: false,
-            //       );
-            //     }
-            //   },
-            //   child: Container(
-            //     // height: 100,
-            //     width: 150,
-            //     padding: const EdgeInsets.all(10),
-            //     decoration: BoxDecoration(
-            //         border: Border.all(color: Colors.white.withOpacity(0.9)),
-            //         borderRadius: BorderRadius.circular(20),
-            //         gradient: const LinearGradient(
-            //             begin: Alignment.topLeft,
-            //             end: Alignment.center,
-            //             colors: [Colors.white, Colors.blue])),
-            //     child: Row(
-            //       children: [
-            //         CircleAvatar(
-            //           backgroundColor: Colors.white,
-            //           child: Image.asset('lib/assets/telegram-logo.png'),
-            //         ),
-            //         const SizedBox(
-            //           width: 10,
-            //         ),
-            //         const Text(
-            //           "Telegram",
-            //           style: TextStyle(
-            //               color: Colors.white, fontWeight: FontWeight.bold),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ]),
         ],
       ),

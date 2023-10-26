@@ -9,7 +9,7 @@ class BalanceObscureProvider with ChangeNotifier {
   getBalanceObscureAtInit() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool? isObscure = sharedPreferences.getBool('is_Obscure');
-    if (isObscure != null && isObscure!) {
+    if (isObscure != null && isObscure) {
       passwordObscured = true;
       notifyListeners();
     } else {
@@ -44,8 +44,5 @@ class BalanceObscureProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void loadData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.getBool('isObscured');
-  // }
+  
 }

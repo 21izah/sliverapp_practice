@@ -61,7 +61,7 @@ class _WalletPageState extends State<WalletPage> {
     if (newValue.trim().length > 0) {
       await FirebaseFirestore.instance
           .collection('Users')
-          .doc(user!.email)
+          .doc(user!.uid)
           .update({
         walletType: newValue,
       });
@@ -132,7 +132,7 @@ class _WalletPageState extends State<WalletPage> {
                                 FutureBuilder<DocumentSnapshot>(
                                   future: FirebaseFirestore.instance
                                       .collection('Users')
-                                      .doc(user!.email)
+                                      .doc(user!.uid)
                                       .get(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -199,7 +199,7 @@ class _WalletPageState extends State<WalletPage> {
                                 FutureBuilder<DocumentSnapshot>(
                                   future: FirebaseFirestore.instance
                                       .collection('Users')
-                                      .doc(user.email)
+                                      .doc(user.uid)
                                       .get(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -266,7 +266,7 @@ class _WalletPageState extends State<WalletPage> {
                                 FutureBuilder<DocumentSnapshot>(
                                   future: FirebaseFirestore.instance
                                       .collection('Users')
-                                      .doc(user.email)
+                                      .doc(user.uid)
                                       .get(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -333,7 +333,7 @@ class _WalletPageState extends State<WalletPage> {
                                 FutureBuilder<DocumentSnapshot>(
                                   future: FirebaseFirestore.instance
                                       .collection('Users')
-                                      .doc(user.email)
+                                      .doc(user.uid)
                                       .get(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==

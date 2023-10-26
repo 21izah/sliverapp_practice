@@ -10,8 +10,12 @@ import 'package:sliverapp_practice/pages/tab_bar.dart';
 import 'package:sliverapp_practice/pages/welcome_page.dart';
 import 'package:sliverapp_practice/pages/welcomesixth_page.dart';
 
+import '../pages/admin_all_users.dart';
+import '../pages/admin_chat_page.dart';
 import '../pages/loginpage.dart';
 import '../constants/data_constant.dart';
+import '../pages/make_admin_page.dart';
+import '../pages/update_buy_sell_rate.dart';
 import '../pages/wallet_page.dart';
 
 class HiddenDrawer extends StatefulWidget {
@@ -45,26 +49,26 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
       ScreenHiddenDrawer(
         ItemHiddenMenu(
             colorLineSelected: Colors.green,
-            name: 'Wallet Address',
+            name: 'Make Admin',
             baseStyle: const TextStyle(
                 fontWeight: FontWeight.bold, color: Colors.white),
             selectedStyle: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: primaryColor)),
-        const WalletPage(),
+        const MakeAdminPage(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
             colorLineSelected: primaryColor,
-            name: 'Transaction History',
+            name: 'Update Buy Sell Rate',
             baseStyle:
                 TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             selectedStyle: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: primaryColor)),
-        const TabBarWidget(),
+        const UpdateBuySellRate(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -76,7 +80,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: primaryColor)),
-        const ProfilePage(),
+        AdminChatPage(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(

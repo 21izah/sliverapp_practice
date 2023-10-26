@@ -24,11 +24,10 @@ import 'package:sliverapp_practice/pages/pin_code_page.dart';
 import 'package:sliverapp_practice/pages/sliver_app.dart';
 import 'package:http/http.dart' as http;
 
-import 'Supabase_read_display.dart';
 import 'get_firstname_firebase.dart';
 import 'read_display_firebase.dart';
 import 'read_from_firebase.dart';
-import '../backend_page_operations/create_data_firebase.dart';
+
 import 'stream_firstname.dart';
 import 'user_id.dart';
 import 'package:firebase_auth/firebase_auth.dart';

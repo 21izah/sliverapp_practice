@@ -35,16 +35,17 @@ class OptionSelection extends StatelessWidget {
         width: screenSize.width - 50,
         // color: Colors.amber,
         decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
+            // color: Theme.of(context).colorScheme.tertiary,
+            borderRadius: BorderRadius.circular(30)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 10),
+                padding: const EdgeInsets.only(left: 5.0, right: 10),
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(50),
                       color: Colors.grey[300]),
                   height: 45,
                   width: 40,
@@ -75,7 +76,7 @@ class OptionSelection extends StatelessWidget {
             padding: EdgeInsets.only(right: 10.0),
             child: Icon(
               Icons.arrow_forward_ios_sharp,
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
           )
         ]),

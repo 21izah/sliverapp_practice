@@ -59,22 +59,3 @@ class UserScreen extends StatelessWidget {
     );
   }
 }
-          // String firstName;
-            // snapshot.data!.docs.forEach(
-            //   (element) {
-            //     if (element.data().containsKey('First Name')) {
-            //       firstName = element.data()['First Name'];
-            //     }
-            //   },
-            // );
-
-            // if (firstName != null) {
-            //   return Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Center(child: Text('first name: $firstName')),
-            //     ],
-            //   );
-            // } else {
-            //   return Text('data');
-            // }
